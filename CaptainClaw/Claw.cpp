@@ -1,7 +1,8 @@
 #include <Windows.h>
 #include <GL/freeglut.h>
-#include <math.h>
 #include <iostream>
+#include "Texture.h"
+#include "Render.h"
 
 int xx = 0;
 int yy = 800;
@@ -15,6 +16,7 @@ void init()
     glMatrixMode(GL_PROJECTION);
 }
 
+/*
 void reshape(GLsizei width, GLsizei height) {
     if (height == 0) height = 1;
     GLfloat aspect = (GLfloat)width / (GLfloat)height;
@@ -29,59 +31,7 @@ void reshape(GLsizei width, GLsizei height) {
     else {
         gluOrtho2D(-1.0, 1.0, -1.0 / aspect, 1.0 / aspect);
     }
-}
-void drawPlatforms(int x1, int y1, int x2, int y2)
-{
-    glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_QUADS);
-    glVertex2f(x1, y1);
-    glVertex2f(x2, y2);
-    glVertex2f(x2 - 10, y2 + 5);
-    glVertex2f(x1 + 10, y1 + 5);
-    glEnd();
-}
-
-void human()
-{
-    glColor3f(1.0, 0.0, 0.0);
-
-
-    float theta;
-    glBegin(GL_POLYGON); // FACE
-    for (int i = 0; i < 360; i++)
-    {
-        theta = i * 3.14159 / 180;
-        glVertex2f(xx + 150 + cos(theta) * 30, yy + 200 + sin(theta) * 30);
-    }
-    glEnd();
-
-    glLineWidth(5.0); // BODY
-    glBegin(GL_LINES);
-    glVertex2d(xx + 150.0, yy + 130.0);
-    glVertex2d(xx + 150.0, yy + 170.0);
-    glEnd();
-
-    glBegin(GL_LINE_STRIP); // LEGS
-    glVertex2d(xx + 130.0, yy + 100.0);
-    glVertex2d(xx + 150.0, yy + 130.0);
-    glVertex2d(xx + 170.0, yy + 100.0);
-    glEnd();
-
-    glBegin(GL_LINE_STRIP); // HANDS
-    glVertex2d(xx + 130.0, yy + 150.0);
-    glVertex2d(xx + 150.0, yy + 170.0);
-    glVertex2d(xx + 170.0, yy + 150.0);
-    glEnd();
-
-    glColor3f(0.0, 0.0, 0.0);
-    glPointSize(5.0);
-    glBegin(GL_POINTS); // EYES
-    glVertex2d(xx + 135.0, yy + 210.0);
-    glVertex2d(xx + 165.0, yy + 210.0);
-    glEnd();
-
-}
-
+}*/
 
 void fallDown(int value)
 {
@@ -115,19 +65,24 @@ void keyPressed(unsigned char key, int x, int y)
 
 void display()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+    
+    background();
     drawPlatforms(100, 100, 300, 100);
     drawPlatforms(400, 550, 600, 550);
     drawPlatforms(900, 320, 1150, 320);
-
+    
     human();
-
-    glFlush();
+    glDisable(GL_TEXTURE_2D);
+    //glFlush();
     // glutPostRedisplay();
     glutSwapBuffers();
 
 }
+
+
+
 
 int main(int argc, char** argv)
 {
@@ -135,16 +90,20 @@ int main(int argc, char** argv)
     width1 = glutGet(GLUT_SCREEN_WIDTH);
     height1 = glutGet(GLUT_SCREEN_HEIGHT);
     glutInitWindowSize(width1, height1);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutCreateWindow("Captain's Claw's Quest");
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutCreateWindow("Captain Claw's Quest");
     glutFullScreen();
     init();
+    loadtexture();
+
     glutDisplayFunc(display);
     glutSpecialFunc(specialkey);
     glutKeyboardFunc(keyPressed);
-    glutReshapeFunc(reshape);
+    //glutReshapeFunc(reshape);
     if (yy > 200)
         glutTimerFunc(0, fallDown, 0);
+
+    std::cout << glGetString(GL_VERSION);
     glutMainLoop();
     return 0;
 }
