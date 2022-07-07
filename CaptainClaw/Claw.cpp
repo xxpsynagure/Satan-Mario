@@ -1,17 +1,19 @@
 #include <Windows.h>
 #include <GL/freeglut.h>
 #include <iostream>
-#include "Texture.h"
-#include "Render.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "./Texture.h"
+#include "./Render.h"
+
 
 int xx = 0;
-int yy = 800;
+int yy = 500;
 GLint width1, height1;
 
 void init()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
-    gluOrtho2D(0.0, (GLdouble)width1, 0.0, (GLdouble)height1);
+    gluOrtho2D(0.0, (GLdouble)width1/3, 0.0, (GLdouble)height1/3);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
 }
@@ -35,7 +37,7 @@ void reshape(GLsizei width, GLsizei height) {
 
 void fallDown(int value)
 {
-    yy -= 0.0005;
+    yy -= 0.5;
     glutTimerFunc(30, fallDown, 0);
     glutPostRedisplay();
 }
@@ -43,7 +45,7 @@ void fallDown(int value)
 void specialkey(int key, int x, int y)
 {
     switch (key) {
-    case GLUT_KEY_UP: yy += 20;
+    case GLUT_KEY_UP: yy += 10; xx += 5;
         break;
     case GLUT_KEY_DOWN: yy -= 5;
         break;
@@ -69,9 +71,9 @@ void display()
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     
     background();
-    drawPlatforms(100, 100, 300, 100);
-    drawPlatforms(400, 550, 600, 550);
-    drawPlatforms(900, 320, 1150, 320);
+    drawPlatforms(100, 100, 200, 100);
+    drawPlatforms(400, 550, 500, 550);
+    drawPlatforms(900, 320, 1050, 320);
     
     human();
     glDisable(GL_TEXTURE_2D);
