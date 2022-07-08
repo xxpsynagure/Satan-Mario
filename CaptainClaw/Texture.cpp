@@ -12,12 +12,20 @@ void background() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, bg_texture);
-    
+    /*
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);   glVertex2f(0.0, 0.0);
     glTexCoord2f(0.0f, 1.0f);   glVertex2f(0.0, (float)height1);
     glTexCoord2f(1.0f, 1.0f);   glVertex2f((float)width1, (float)height1);
     glTexCoord2f(1.0f, 0.0f);   glVertex2f((float)width1, 0.0);
+    glEnd();
+    */
+    //Image size = 1536*1536
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f(0.0, 0.0);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f(0.0, (float)1536);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f((float)1536, (float)1536);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f((float)1536, 0.0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 }
