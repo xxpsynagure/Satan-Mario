@@ -1,6 +1,7 @@
 #include "stb_image.h"
 #include <GL/freeglut.h>
 #include <iostream>
+#include "Texture.h"
 
 GLuint bg_texture;
 extern int width1, height1;

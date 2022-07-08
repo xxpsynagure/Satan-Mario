@@ -4,6 +4,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
+#include "./Render.cpp"
+#include "./Texture.cpp"
 
 //Position of player
 int xx = -50;
@@ -67,7 +69,7 @@ void specialkey(int key, int x, int y)
             }
         }
         
-        std::cout << "LEFT: " << xx << "\t" << yy << std::endl;
+        // std::cout << "LEFT: " << xx << "\t" << yy << std::endl;
         break;
 
     case GLUT_KEY_RIGHT: 
@@ -82,7 +84,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
+        // std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
 
     case GLUT_KEY_UP: 
@@ -97,7 +99,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        std::cout <<"UP: " << xx << "\t" << yy << std::endl;
+        // std::cout <<"UP: " << xx << "\t" << yy << std::endl;
         break;
 
     case GLUT_KEY_DOWN: 
@@ -112,7 +114,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        std::cout <<"DOWN: " << xx << "\t" << yy << std::endl;
+        // std::cout <<"DOWN: " << xx << "\t" << yy << std::endl;
         break;
     }
     glutPostRedisplay();
@@ -130,11 +132,17 @@ void display()
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     
     background();
-    drawPlatforms(100, 100, 200, 100);
-    drawPlatforms(400, 550, 500, 550);
-    drawPlatforms(900, 320, 1050, 320);
+    // drawPlatforms(100, 100, 200, 100);
+    // drawPlatforms(400, 550, 500, 550);
+    // drawPlatforms(900, 320, 1050, 320);
+    Platforms platform1(100, 100, 200, 100);
+    Platforms platform2(400, 550, 500, 550);
+    Platforms platform3(900, 320, 1050, 320);
     
-    human();
+    // human();
+    Human human(xx, yy);
+    human.draw();
+    // std::cout<<"x value of human is "<<human.x;
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
 
