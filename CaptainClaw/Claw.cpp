@@ -58,7 +58,7 @@ void specialkey(int key, int x, int y)
         if (xx > -50.0)
         {
             xx -= 5;
-            if (left > 0.0)
+            if (left > 0.0 && xx<=1150)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -74,7 +74,7 @@ void specialkey(int key, int x, int y)
         if (xx < 1440)
         {
             xx += 5;
-            if (right < 1536)
+            if (right < 1536 && xx >=165)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -82,7 +82,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        std::cout << "RIGHT: " << xx << "\t" << yy << std::endl;
+        std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
 
     case GLUT_KEY_UP: 
