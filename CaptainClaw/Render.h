@@ -1,6 +1,6 @@
 #pragma once
-void drawPlatforms(int x1, int y1, int x2, int y2);
-void human();
+//void drawPlatforms(int x1, int y1, int x2, int y2);
+//void human();
 
 
 class Human

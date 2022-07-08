@@ -4,8 +4,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-#include "./Render.cpp"
-#include "./Texture.cpp"
 
 //Position of player
 int xx = -50;
@@ -14,7 +12,7 @@ GLint width1, height1;
 
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
-float i = 0.0, j = 0.0;
+float deltaTime, oldTime;
 
 void init()
 {
@@ -69,7 +67,7 @@ void specialkey(int key, int x, int y)
             }
         }
         
-        // std::cout << "LEFT: " << xx << "\t" << yy << std::endl;
+        //std::cout << "LEFT: " << xx << "\t" << yy << std::endl;
         break;
 
     case GLUT_KEY_RIGHT: 
@@ -84,7 +82,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        // std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
+        //std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
 
     case GLUT_KEY_UP: 
@@ -128,6 +126,11 @@ void keyPressed(unsigned char key, int x, int y)
 
 void display()
 {
+    deltaTime = clock() - oldTime;
+    double fps = (1.0 / deltaTime) * 1000;
+    oldTime = clock();
+    std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     
@@ -157,9 +160,11 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutCreateWindow("Captain Claw's Quest");
     glutFullScreen();
+    glutSetCursor(GLUT_CURSOR_NONE);
+
     init();
     loadtexture();
-
+    oldTime = clock();
     glutDisplayFunc(display);
     glutSpecialFunc(specialkey);
     glutKeyboardFunc(keyPressed);
