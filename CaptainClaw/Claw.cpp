@@ -56,7 +56,7 @@ void specialkey(int key, int x, int y)
     switch (key) {
 
     case GLUT_KEY_LEFT: 
-        if (xx > 0.0)
+        if (xx > -50.0)
         {
             xx -= 5;
             if (left > 0.0)
