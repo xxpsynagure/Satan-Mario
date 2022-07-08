@@ -22,33 +22,33 @@ void human()
     for (int i = 0; i < 360; i++)
     {
         theta = i * 3.14159 / 180;
-        glVertex2f(xx + 150 + cos(theta) * 30, yy + 200 + sin(theta) * 30);
+        glVertex2f(xx + 150/2 + cos(theta) * 30/2, yy + 200/2 + sin(theta) * 30/2);
     }
     glEnd();
 
-    glLineWidth(5.0); // BODY
+    glLineWidth(5); // BODY
     glBegin(GL_LINES);
-    glVertex2d(xx + 150.0, yy + 130.0);
-    glVertex2d(xx + 150.0, yy + 170.0);
+    glVertex2d(xx + 150.0/2, yy + 130.0/2);
+    glVertex2d(xx + 150.0/2, yy + 170.0/2);
     glEnd();
 
     glBegin(GL_LINE_STRIP); // LEGS
-    glVertex2d(xx + 130.0, yy + 100.0);
-    glVertex2d(xx + 150.0, yy + 130.0);
-    glVertex2d(xx + 170.0, yy + 100.0);
+    glVertex2d(xx + 130.0/2, yy + 100.0/2);
+    glVertex2d(xx + 150.0/2, yy + 130.0/2);
+    glVertex2d(xx + 170.0/2, yy + 100.0/2);
     glEnd();
 
     glBegin(GL_LINE_STRIP); // HANDS
-    glVertex2d(xx + 130.0, yy + 150.0);
-    glVertex2d(xx + 150.0, yy + 170.0);
-    glVertex2d(xx + 170.0, yy + 150.0);
+    glVertex2d(xx + 130.0/2, yy + 150.0/2);
+    glVertex2d(xx + 150.0/2, yy + 170.0/2);
+    glVertex2d(xx + 170.0/2, yy + 150.0/2);
     glEnd();
 
     glColor3f(0.0, 0.0, 0.0);
-    glPointSize(5.0);
+    glPointSize(5);
     glBegin(GL_POINTS); // EYES
-    glVertex2d(xx + 135.0, yy + 210.0);
-    glVertex2d(xx + 165.0, yy + 210.0);
+    glVertex2d(xx + 135.0/2, yy + 210.0/2);
+    glVertex2d(xx + 165.0/2, yy + 210.0/2);
     glEnd();
 
 }
