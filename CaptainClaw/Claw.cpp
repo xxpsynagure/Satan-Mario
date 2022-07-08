@@ -1,14 +1,18 @@
 #include <Windows.h>
 #include <GL/freeglut.h>
 #include <iostream>
+#include <stdlib.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
+// #include "./Render.cpp"
+// #include "./Texture.cpp"
 
 //Position of player
 int xx = -50;
 int yy = 940;
 GLint width1, height1;
+int moveDownFlag = 1;
 
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
@@ -48,6 +52,19 @@ void fallDown(int value)
     yy -= 0.5;
     glutTimerFunc(30, fallDown, 0);
     glutPostRedisplay();
+}
+
+bool collisionDetection(Human &human, Platforms &platform)
+{
+    if(abs(human.x - platform.x1) < 70 && abs(human.y - platform.y1) < 2)
+    {
+        std::cout<<"COLLISION DETECTED!!----------\n";
+        moveDownFlag = 0;
+    }
+    else
+        moveDownFlag = 1;
+    std::cout<<"human x : "<<human.x<<"\t platform x : "<<platform.x1<<"\n";
+    std::cout<<"human y : "<<human.y<<"\t platform y : "<<platform.y1<<"\n";
 }
 
 void specialkey(int key, int x, int y)
@@ -101,7 +118,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_DOWN: 
-        if (yy > 0)
+        if (yy > 0 && moveDownFlag!=0)
         {
             yy -= 10;
             if (bottom > 0.0)
@@ -126,10 +143,10 @@ void keyPressed(unsigned char key, int x, int y)
 
 void display()
 {
-    deltaTime = clock() - oldTime;
-    double fps = (1.0 / deltaTime) * 1000;
-    oldTime = clock();
-    std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
+    // deltaTime = clock() - oldTime;
+    // double fps = (1.0 / deltaTime) * 1000;
+    // oldTime = clock();
+    // std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
@@ -146,6 +163,7 @@ void display()
     Human human(xx, yy);
     human.draw();
     // std::cout<<"x value of human is "<<human.x;
+    collisionDetection(human, platform1);
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
 

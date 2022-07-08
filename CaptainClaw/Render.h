@@ -19,7 +19,7 @@ class Platforms
 private:
     /* data */
 public:
-    GLint x1, y1, x2, y2;
+    GLfloat x1, y1, x2, y2;
     Platforms(int, int , int , int);
     // ~Platforms();
 };
