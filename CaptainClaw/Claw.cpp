@@ -6,12 +6,12 @@
 #include "Render.h"
 
 //Position of player
-int xx = 0;
-int yy = 0;
+int xx = -50;
+int yy = 940;
 GLint width1, height1;
 
 // game map size = 1536*1536
-GLdouble left=0.0, right= 768.0, bottom=0.0, top = 768.0 ;
+GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
 float i = 0.0, j = 0.0;
 
 void init()
@@ -20,7 +20,6 @@ void init()
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    //gluOrtho2D(0.0, (GLdouble)width1 / 2, 0.0, (GLdouble)height1 / 2);
     gluOrtho2D(left, right, bottom, top);
     glViewport(0, 0, width1, height1);
 
@@ -137,8 +136,6 @@ void display()
     
     human();
     glDisable(GL_TEXTURE_2D);
-    //glFlush();
-    // glutPostRedisplay();
     glutSwapBuffers();
 
 }
