@@ -14,6 +14,8 @@ int yy = 940;
 GLint width1, height1;
 int moveDownFlag = 1;
 
+int flag = 1;
+int level = 1;
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
 float deltaTime, oldTime;
@@ -49,12 +51,18 @@ void reshape(GLsizei width, GLsizei height) {
 
 void fallDown(int value)
 {
-    yy -= 0.5;
+    if (yy > 940 && level==1)
+    {
+        yy-=3;
+        if (flag == 1) xx ++;
+        else xx -= 0.5;
+    }
+    //std::cout <<"flag: " << flag << std::endl;
     glutTimerFunc(30, fallDown, 0);
     glutPostRedisplay();
 }
 
-bool collisionDetection(Human &human, Platforms &platform)
+void collisionDetection(Human &human, Platforms &platform)
 {
     if(abs(human.x - platform.x1) < 70 && abs(human.y - platform.y1) < 2)
     {
@@ -63,8 +71,8 @@ bool collisionDetection(Human &human, Platforms &platform)
     }
     else
         moveDownFlag = 1;
-    std::cout<<"human x : "<<human.x<<"\t platform x : "<<platform.x1<<"\n";
-    std::cout<<"human y : "<<human.y<<"\t platform y : "<<platform.y1<<"\n";
+    //std::cout<<"human x : "<<human.x<<"\t platform x : "<<platform.x1<<"\n";
+    //std::cout<<"human y : "<<human.y<<"\t platform y : "<<platform.y1<<"\n";
 }
 
 void specialkey(int key, int x, int y)
@@ -83,7 +91,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        
+        flag = 0;
         //std::cout << "LEFT: " << xx << "\t" << yy << std::endl;
         break;
 
@@ -99,6 +107,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
+        flag = 1;
         //std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
 
@@ -139,14 +148,25 @@ void keyPressed(unsigned char key, int x, int y)
 {
     if (key == 27)
         exit(0);
+    else if (key == 32)
+    {
+        if (yy == 940)
+        {
+            yy += 75;
+            if (flag == 1) xx += 40;
+            else xx -= 40;
+        }
+        std::cout << "JUMP: " << xx << "\t" << yy << std::endl;
+    }
+    glutPostRedisplay();
 }
 
 void display()
 {
-    // deltaTime = clock() - oldTime;
-    // double fps = (1.0 / deltaTime) * 1000;
-    // oldTime = clock();
-    // std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
+    deltaTime = clock() - oldTime;
+    double fps = (1.0 / deltaTime) * 1000;
+    oldTime = clock();
+    //std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
@@ -187,9 +207,7 @@ int main(int argc, char** argv)
     glutSpecialFunc(specialkey);
     glutKeyboardFunc(keyPressed);
     //glutReshapeFunc(reshape);
-    //if (yy > 200)
-        //glutTimerFunc(0, fallDown, 0);
-
+    glutTimerFunc(30, fallDown, 0);
     std::cout << glGetString(GL_VERSION)<<std::endl;
     std::cout << width1 << "  " << height1 << std::endl;
     glutMainLoop();
