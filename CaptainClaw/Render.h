@@ -9,6 +9,12 @@ private:
     /* data */
 public:
     GLfloat x, y, theta;
+    struct Position
+    {
+        GLfloat x, y;
+    };
+    Position bottomLeft, bottomRight, topRight, topLeft;
+    // Human();
     Human(int, int);
     // ~Human();
     void draw();
@@ -19,9 +25,16 @@ class Platforms
 private:
     /* data */
 public:
-    GLfloat x1, y1, x2, y2;
+    struct Position{
+        GLfloat x, y;
+    };
+    Position bottomLeft, bottomRight, topRight, topLeft;
+
+    // Platforms();
     Platforms(int, int , int , int);
     // ~Platforms();
 };
+
+
 
 

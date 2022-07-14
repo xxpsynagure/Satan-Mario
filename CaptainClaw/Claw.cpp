@@ -5,15 +5,16 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-// #include "./Render.cpp"
-// #include "./Texture.cpp"
+#include "./Render.cpp"
+#include "./Texture.cpp"
+#include "./Actions.cpp"
 
 //Position of player
-int xx = -50;
+int xx = 0;
 int yy = 940;
 GLint width1, height1;
 int moveDownFlag = 1;
-
+int goWhereFlag = 1;
 int flag = 1;
 int level = 1;
 // game map size = 1536*1536
@@ -62,25 +63,14 @@ void fallDown(int value)
     glutPostRedisplay();
 }
 
-void collisionDetection(Human &human, Platforms &platform)
-{
-    if(abs(human.x - platform.x1) < 70 && abs(human.y - platform.y1) < 2)
-    {
-        std::cout<<"COLLISION DETECTED!!----------\n";
-        moveDownFlag = 0;
-    }
-    else
-        moveDownFlag = 1;
-    //std::cout<<"human x : "<<human.x<<"\t platform x : "<<platform.x1<<"\n";
-    //std::cout<<"human y : "<<human.y<<"\t platform y : "<<platform.y1<<"\n";
-}
 
 void specialkey(int key, int x, int y)
 {
     switch (key) {
 
     case GLUT_KEY_LEFT: 
-        if (xx > -50.0)
+        goWhereFlag = 0;
+        if (xx > 0.0)
         {
             xx -= 5;
             if (left > 0.0 && xx<=1150)
@@ -96,6 +86,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_RIGHT: 
+        goWhereFlag = 1;
         if (xx < 1440)
         {
             xx += 5;
@@ -161,6 +152,8 @@ void keyPressed(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3);
+
 void display()
 {
     deltaTime = clock() - oldTime;
@@ -183,10 +176,18 @@ void display()
     Human human(xx, yy);
     human.draw();
     // std::cout<<"x value of human is "<<human.x;
-    collisionDetection(human, platform1);
+    checkObjectsCollisions(human, platform1, platform2, platform3);
+
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
 
+}
+
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3)
+{
+    // platformCollision(human, platform1);
+    platformCollision(human, platform2);
+    // platformCollision(human, platform3);
 }
 
 int main(int argc, char** argv)
