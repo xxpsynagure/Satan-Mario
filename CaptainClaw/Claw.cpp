@@ -13,10 +13,11 @@
 int xx = 0;
 int yy = 940;
 GLint width1, height1;
-int moveDownFlag = 1;
+int moveDownFlag = 0;
 int goWhereFlag = 1;
 int flag = 1;
 int level = 1;
+int upInAir = 0;
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
 float deltaTime, oldTime;
@@ -52,7 +53,7 @@ void reshape(GLsizei width, GLsizei height) {
 
 void fallDown(int value)
 {
-    if (yy > 940 && level==1)
+    if (yy > 940 && level==1 && upInAir!=1)
     {
         yy-=3;
         if (flag == 1) xx ++;
@@ -87,7 +88,7 @@ void specialkey(int key, int x, int y)
 
     case GLUT_KEY_RIGHT: 
         goWhereFlag = 1;
-        if (xx < 1440)
+        if (xx < 1530)
         {
             xx += 5;
             if (right < 1536 && xx >=165)
@@ -105,8 +106,9 @@ void specialkey(int key, int x, int y)
     case GLUT_KEY_UP: 
         if (yy < 1440)
         {
+            // upInAir = 1;
             yy += 10;
-            if (top < 1560)
+            if (top < 1500)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -118,7 +120,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_DOWN: 
-        if (yy > 0 && moveDownFlag!=0)
+        if (yy > 0 && moveDownFlag!=0 && level != 1)
         {
             yy -= 10;
             if (bottom > 0.0)
@@ -152,7 +154,8 @@ void keyPressed(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3);
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder);
+
 
 void display()
 {
@@ -168,26 +171,35 @@ void display()
     // drawPlatforms(100, 100, 200, 100);
     // drawPlatforms(400, 550, 500, 550);
     // drawPlatforms(900, 320, 1050, 320);
+    // Platforms platform0(350, 1050, 450, 1050);
+    Blocks block0(350, 1150);
+    Blocks block1(371, 1150);
+    Blocks block2(392, 1150);
     Platforms platform1(100, 100, 200, 100);
     Platforms platform2(400, 550, 500, 550);
     Platforms platform3(900, 320, 1050, 320);
     
-    // human();
+    Ladder ladder(xx, yy);
+    ladder.draw();
+
     Human human(xx, yy);
     human.draw();
-    // std::cout<<"x value of human is "<<human.x;
-    checkObjectsCollisions(human, platform1, platform2, platform3);
+    // std::cout<<xx<<" "<<yy;
+
+
+    checkObjectsCollisions(human, platform1, platform2, platform3, ladder);
 
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
 
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3)
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder)
 {
     // platformCollision(human, platform1);
-    platformCollision(human, platform2);
+    platformCollision(human, platform1);
     // platformCollision(human, platform3);
+    ladderCollision(human, ladder);
 }
 
 int main(int argc, char** argv)

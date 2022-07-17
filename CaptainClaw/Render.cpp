@@ -83,6 +83,17 @@ void Human::draw()
 
     glColor3f(1.0, 0.0, 0.0);
 
+    glBegin(GL_TRIANGLES); // HORNS
+    glVertex2f(x - 15, y + 115);
+    glVertex2f(x - 12.5, y + 130);
+    glVertex2f(x - 10, y + 115);
+    glEnd();
+    glBegin(GL_TRIANGLES); // HORNS
+    glVertex2f(x + 15, y + 115);
+    glVertex2f(x + 12.5, y + 130);
+    glVertex2f(x + 10, y + 115);
+    glEnd();
+
     glBegin(GL_POLYGON); // FACE
     for (int i = 0; i < 360; i++)
     {
@@ -142,4 +153,86 @@ Platforms::Platforms(int xx1, int yy1, int xx2, int yy2)
     glVertex2f(this->bottomRight.x - 10, this->bottomRight.y + 5);
     glVertex2f(this->bottomLeft.x + 10, this->bottomLeft.y + 5);
     glEnd();
+}
+
+Ladder::Ladder(int x, int y)
+{
+    this->bottomLeft.x = 1460;
+    this->bottomLeft.y = 560;
+    this->bottomRight.x = 1500;
+    this->bottomRight.y = 560;
+    this->topRight.x = 1500;
+    this->topRight.y = 980;
+    this->topLeft.x = 1460;
+    this->topLeft.y = 980;
+}
+
+void Ladder::draw()
+{
+    // std::cout<<"i am drawing ladder";
+    glLineWidth(5.0);
+    glColor3f(0.5, 0.35, 0.05);
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y);
+    glVertex2d(bottomLeft.x, bottomLeft.y);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topRight.x, topRight.y);
+    glVertex2d(bottomRight.x, bottomRight.y);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-40);
+    glVertex2d(topRight.x, topRight.y-40);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-80);
+    glVertex2d(topRight.x, topRight.y-80);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-120);
+    glVertex2d(topRight.x, topRight.y-120);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-160);
+    glVertex2d(topRight.x, topRight.y-160);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-200);
+    glVertex2d(topRight.x, topRight.y-200);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-240);
+    glVertex2d(topRight.x, topRight.y-240);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-280);
+    glVertex2d(topRight.x, topRight.y-280);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-320);
+    glVertex2d(topRight.x, topRight.y-320);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-360);
+    glVertex2d(topRight.x, topRight.y-360);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2d(topLeft.x, topLeft.y-400);
+    glVertex2d(topRight.x, topRight.y-400);
+    glEnd();
+}
+
+Blocks::Blocks(int x, int y)
+{
+    this->bottomLeft.x = x;
+    this->bottomLeft.y = y;
+
+    glColor3f(0.360, 0.235, 0.003);
+    glBegin(GL_QUADS);
+    glVertex2f(bottomLeft.x, bottomLeft.y);
+    glVertex2f(bottomLeft.x+20, bottomLeft.y);
+    glVertex2f(bottomLeft.x+20, bottomLeft.y+30);
+    glVertex2f(bottomLeft.x, bottomLeft.y+30);
+    glEnd();
+    
 }

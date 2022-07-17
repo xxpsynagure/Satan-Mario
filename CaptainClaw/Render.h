@@ -35,6 +35,36 @@ public:
     // ~Platforms();
 };
 
+class Ladder{
+private:
+    /* data */
+public:
+    struct Position{
+        GLfloat x, y;
+    };
+    Position bottomLeft, bottomRight, topRight, topLeft;
+
+    Ladder(int, int);
+    // ~Ladder();
+
+    void draw();
+};
+
+class Blocks
+{
+private:
+    /* data */
+public:
+    struct Position{
+        GLfloat x, y;
+    };
+    Position bottomLeft;
+    
+    Blocks(int, int);
+    // ~Blocks();
+};
+
+
 
 
 
