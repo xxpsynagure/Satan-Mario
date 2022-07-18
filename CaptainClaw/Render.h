@@ -16,7 +16,7 @@ public:
     Position bottomLeft, bottomRight, topRight, topLeft;
     // Human();
     Human(int, int);
-    // ~Human();
+    ~Human(){}
     void draw();
 };
 
@@ -32,7 +32,7 @@ public:
 
     // Platforms();
     Platforms(int, int , int , int);
-    // ~Platforms();
+    ~Platforms(){}
 };
 
 class Ladder{
@@ -45,7 +45,7 @@ public:
     Position bottomLeft, bottomRight, topRight, topLeft;
 
     Ladder(int, int);
-    // ~Ladder();
+    ~Ladder(){}
 
     void draw();
 };
@@ -61,10 +61,34 @@ public:
     Position bottomLeft;
     
     Blocks(int, int);
-    // ~Blocks();
+    ~Blocks(){}
 };
 
+class Thorns{
+private:
+    /* data */
+public:
+    GLfloat x, n;
+    Thorns(int, int);
+    ~Thorns(){}
 
+};
 
+class Diamonds{
+private:
+    /* data */
+public:
+    struct Position{
+        GLfloat x, y;
+    };
+    Position bottom, right, top, left;
+    int enabled = 1;
+
+    Diamonds(){}
+    ~Diamonds(){}
+
+    void draw(int, int);
+
+};
 
 

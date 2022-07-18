@@ -21,7 +21,8 @@ int upInAir = 0;
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
 float deltaTime, oldTime;
-
+Diamonds diamond0, diamond1, diamond2;
+int diamondCollected = 0;
 void init()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -53,12 +54,14 @@ void reshape(GLsizei width, GLsizei height) {
 
 void fallDown(int value)
 {
-    if (yy > 940 && level==1 && upInAir!=1)
+    if (yy > 940 && level==1 && upInAir==1)
     {
         yy-=3;
         if (flag == 1) xx ++;
         else xx -= 0.5;
     }
+    else
+        upInAir = 0;
     //std::cout <<"flag: " << flag << std::endl;
     glutTimerFunc(30, fallDown, 0);
     glutPostRedisplay();
@@ -106,7 +109,7 @@ void specialkey(int key, int x, int y)
     case GLUT_KEY_UP: 
         if (yy < 1440)
         {
-            // upInAir = 1;
+            upInAir = 1;
             yy += 10;
             if (top < 1500)
             {
@@ -154,7 +157,7 @@ void keyPressed(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder);
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0);
 
 
 void display()
@@ -182,24 +185,45 @@ void display()
     Ladder ladder(xx, yy);
     ladder.draw();
 
+    Thorns Thorn0(980, 10); // x coordinate value and no of thorns
+
+    if(diamond0.enabled == 1)
+    {
+        diamond0.draw(400, 1050);
+    }
+    if(diamond1.enabled == 1)
+    {
+        diamond1.draw(420, 1050);
+    }
+    if(diamond2.enabled == 1)
+    {
+        diamond2.draw(440, 1050);
+    }
+
     Human human(xx, yy);
     human.draw();
     // std::cout<<xx<<" "<<yy;
 
 
-    checkObjectsCollisions(human, platform1, platform2, platform3, ladder);
+    checkObjectsCollisions(human, platform1, platform2, platform3, ladder, block0, diamond0, diamond1, diamond2, Thorn0);
 
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
+    std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
 
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder)
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0)
 {
     // platformCollision(human, platform1);
     platformCollision(human, platform1);
     // platformCollision(human, platform3);
     ladderCollision(human, ladder);
+    blockCollision(human, block0);
+    diamondCollision(human, diamond0);
+    diamondCollision(human, diamond1);
+    diamondCollision(human, diamond2);
+    ThornCollision(human, Thorn0);
 }
 
 int main(int argc, char** argv)

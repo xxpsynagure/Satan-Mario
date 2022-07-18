@@ -83,15 +83,18 @@ void Human::draw()
 
     glColor3f(1.0, 0.0, 0.0);
 
+    // glRotatef(-10, 1, 0, );
     glBegin(GL_TRIANGLES); // HORNS
-    glVertex2f(x - 15, y + 115);
-    glVertex2f(x - 12.5, y + 130);
-    glVertex2f(x - 10, y + 115);
+    glVertex2f(x - 12, y + 112);
+    glVertex2f(x - 10, y + 130);
+    glVertex2f(x - 8, y + 112);
     glEnd();
+
+    // glRotatef(10, 1, 0, 0);
     glBegin(GL_TRIANGLES); // HORNS
-    glVertex2f(x + 15, y + 115);
-    glVertex2f(x + 12.5, y + 130);
-    glVertex2f(x + 10, y + 115);
+    glVertex2f(x + 12, y + 112);
+    glVertex2f(x + 10, y + 130);
+    glVertex2f(x + 8, y + 112);
     glEnd();
 
     glBegin(GL_POLYGON); // FACE
@@ -235,4 +238,42 @@ Blocks::Blocks(int x, int y)
     glVertex2f(bottomLeft.x, bottomLeft.y+30);
     glEnd();
     
+}
+
+Thorns::Thorns(int xs, int ns)
+{ 
+    this->x = xs;
+    this->n = ns;
+    glColor3f(0.50, 0.50, 0.50);
+    for(int i=0; i<n; i++)
+    {
+        glBegin(GL_TRIANGLES);
+        glVertex2f(x, 0);
+        glVertex2f(x-8, 55);
+        glVertex2f(x-16, 0);
+        glEnd();
+        x -= 16;
+    }
+}
+
+void Diamonds::draw(int x, int y)
+{
+    this->bottom.x = x;
+    this->bottom.y = y;
+    this->right.x = x + 10;
+    this->right.y = y + 18;
+    this->top.x = x;
+    this->top.y = y + 36;
+    this->left.x = x - 10;
+    this->left.y = y + 18;
+
+
+    glColor3f(0.392, 0.584, 0.929); 
+    glBegin(GL_QUADS);
+    glVertex2f(bottom.x, bottom.y);
+    glVertex2f(right.x, right.y);
+    glVertex2f(top.x, top.y);
+    glVertex2f(left.x, left.y);
+    glEnd();
+
 }
