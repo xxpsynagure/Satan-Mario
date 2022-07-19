@@ -1,5 +1,7 @@
 #include "Render.h"
-extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft;
+#include<Windows.h>
+
+extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft, gameOverFlag;
 
 void platformCollision(Human &human, Platforms &platform)
 {   
@@ -33,11 +35,17 @@ void ladderCollision(Human &human , Ladder &ladder)
         moveDownFlag = 0;
         level = 1;
     }
-    if(human.bottomLeft.y <= 940)
+    if(human.bottomLeft.y < 940 && human.bottomLeft.y>=440)
     {
         moveDownFlag = 1;
         level = 2;
     }
+    if (human.bottomLeft.y < 440)
+    {
+        moveDownFlag = 1;
+        level = 3;
+    }
+    
 }
 
 void blockCollision(Human &human, Blocks &block)
@@ -83,7 +91,9 @@ void ThornCollision(Human &human, Thorns &Thorn)
     if(collided)
     {
         std::cout<<"You died";
-        std::exit(0);
+        gameOverFlag = 1;
+
+
     }
 
 
