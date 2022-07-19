@@ -1,5 +1,5 @@
 #include "Render.h"
-extern int moveDownFlag, level, upInAir, diamondCollected;
+extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft;
 
 void platformCollision(Human &human, Platforms &platform)
 {   
@@ -29,16 +29,20 @@ void ladderCollision(Human &human , Ladder &ladder)
         level = 2;
     }
     else
-
     {
         moveDownFlag = 0;
         level = 1;
+    }
+    if(human.bottomLeft.y <= 940)
+    {
+        moveDownFlag = 1;
+        level = 2;
     }
 }
 
 void blockCollision(Human &human, Blocks &block)
 {
-    bool collideX = human.bottomRight.x >= block.bottomLeft.x && block.bottomLeft.x+62 >= human.bottomLeft.x;
+    bool collideX = human.bottomRight.x >= block.bottomLeft.x && block.bottomLeft.x+10 >= human.bottomLeft.x;
     bool collideY = human.bottomRight.y >= block.bottomLeft.y && block.bottomLeft.y+30 >= human.bottomLeft.y;
 
     if(collideX & collideY){
@@ -46,6 +50,14 @@ void blockCollision(Human &human, Blocks &block)
     }
     else{
         upInAir = 1;
+    }
+
+    if(collideX)
+    {
+        moveRight = 0;
+    }
+    else{
+        moveRight = 1;
     }
 }
 

@@ -18,6 +18,7 @@ int goWhereFlag = 1;
 int flag = 1;
 int level = 1;
 int upInAir = 0;
+int moveRight = 1, moveLeft = 1;
 // game map size = 1536*1536
 GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
 float deltaTime, oldTime;
@@ -74,7 +75,7 @@ void specialkey(int key, int x, int y)
 
     case GLUT_KEY_LEFT: 
         goWhereFlag = 0;
-        if (xx > 0.0)
+        if (xx > 0.0 && moveLeft == 1)
         {
             xx -= 5;
             if (left > 0.0 && xx<=1150)
@@ -91,7 +92,18 @@ void specialkey(int key, int x, int y)
 
     case GLUT_KEY_RIGHT: 
         goWhereFlag = 1;
-        if (xx < 1530)
+        
+        if (xx < 1530 && moveRight == 1)
+        {
+            xx += 5;
+            if (right < 1536.0 && xx>=1150)
+            {
+                glMatrixMode(GL_PROJECTION);
+                glLoadIdentity();
+                left += 5; right += 5;
+                gluOrtho2D(left, right, bottom, top);
+            }
+        }
         {
             xx += 5;
             if (right < 1536 && xx >=165)
@@ -148,7 +160,7 @@ void keyPressed(unsigned char key, int x, int y)
     {
         if (yy == 940)
         {
-            yy += 75;
+            yy += 102;
             if (flag == 1) xx += 40;
             else xx -= 40;
         }
@@ -157,7 +169,7 @@ void keyPressed(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0);
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0);
 
 
 void display()
@@ -175,9 +187,11 @@ void display()
     // drawPlatforms(400, 550, 500, 550);
     // drawPlatforms(900, 320, 1050, 320);
     // Platforms platform0(350, 1050, 450, 1050);
-    Blocks block0(350, 1150);
-    Blocks block1(371, 1150);
-    Blocks block2(392, 1150);
+    Blocks block0(320, 1000);
+    Blocks block1(320, 1031);
+    Blocks block2(331, 1000);
+    Blocks block3(331, 1031);
+    // Blocks block4(320, 1031);
     Platforms platform1(100, 100, 200, 100);
     Platforms platform2(400, 550, 500, 550);
     Platforms platform3(900, 320, 1050, 320);
@@ -193,33 +207,37 @@ void display()
     }
     if(diamond1.enabled == 1)
     {
-        diamond1.draw(420, 1050);
+        diamond1.draw(450, 1050);
     }
     if(diamond2.enabled == 1)
     {
-        diamond2.draw(440, 1050);
+        diamond2.draw(500, 1050);
     }
 
     Human human(xx, yy);
     human.draw();
     // std::cout<<xx<<" "<<yy;
+    glRasterPos2f(200, 1400);
+    glutBitmapString(GLUT_BITMAP_8_BY_13, (const unsigned char*)"SATAN MARIO");
 
-
-    checkObjectsCollisions(human, platform1, platform2, platform3, ladder, block0, diamond0, diamond1, diamond2, Thorn0);
+    checkObjectsCollisions(human, platform1, platform2, platform3, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, Thorn0);
 
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
-    std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
+    // std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
 
 }
 
-void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0)
+void checkObjectsCollisions(Human &human, Platforms &platform1, Platforms &platform2, Platforms &platform3, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Thorns &Thorn0)
 {
     // platformCollision(human, platform1);
     platformCollision(human, platform1);
     // platformCollision(human, platform3);
     ladderCollision(human, ladder);
     blockCollision(human, block0);
+    blockCollision(human, block1);
+    blockCollision(human, block2);
+    blockCollision(human, block3);
     diamondCollision(human, diamond0);
     diamondCollision(human, diamond1);
     diamondCollision(human, diamond2);

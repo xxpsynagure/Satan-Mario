@@ -84,18 +84,18 @@ void Human::draw()
     glColor3f(1.0, 0.0, 0.0);
 
     // glRotatef(-10, 1, 0, );
-    glBegin(GL_TRIANGLES); // HORNS
-    glVertex2f(x - 12, y + 112);
-    glVertex2f(x - 10, y + 130);
-    glVertex2f(x - 8, y + 112);
-    glEnd();
+    // glBegin(GL_TRIANGLES); // HORNS
+    // glVertex2f(x - 12, y + 112);
+    // glVertex2f(x - 10, y + 130);
+    // glVertex2f(x - 8, y + 112);
+    // glEnd();
 
     // glRotatef(10, 1, 0, 0);
-    glBegin(GL_TRIANGLES); // HORNS
-    glVertex2f(x + 12, y + 112);
-    glVertex2f(x + 10, y + 130);
-    glVertex2f(x + 8, y + 112);
-    glEnd();
+    // glBegin(GL_TRIANGLES); // HORNS
+    // glVertex2f(x + 12, y + 112);
+    // glVertex2f(x + 10, y + 130);
+    // glVertex2f(x + 8, y + 112);
+    // glEnd();
 
     glBegin(GL_POLYGON); // FACE
     for (int i = 0; i < 360; i++)
