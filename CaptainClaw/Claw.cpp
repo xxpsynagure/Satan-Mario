@@ -5,9 +5,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-#include "./Render.cpp"
-#include "./Texture.cpp"
-#include "./Actions.cpp"
+//#include "./Render.cpp"
+//#include "./Texture.cpp"
+#include "Actions.cpp"
 
 //Position of player
 int xx = 0;
@@ -93,10 +93,10 @@ void specialkey(int key, int x, int y)
     case GLUT_KEY_RIGHT: 
         goWhereFlag = 1;
         
-        if (xx < 1530 && moveRight == 1)
+        if (xx < 1526 && moveRight == 1)
         {
             xx += 5;
-            if (right < 1536.0 && xx>=1150)
+            if (right < 1536.0 && xx>=165)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -104,16 +104,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        {
-            xx += 5;
-            if (right < 1536 && xx >=165)
-            {
-                glMatrixMode(GL_PROJECTION);
-                glLoadIdentity();
-                left += 5; right += 5;
-                gluOrtho2D(left, right, bottom, top);
-            }
-        }
+        
         flag = 1;
         //std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
@@ -146,7 +137,7 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        // std::cout <<"DOWN: " << xx << "\t" << yy << std::endl;
+        std::cout <<"DOWN: " << xx << "\t" << yy << std::endl;
         break;
     }
     glutPostRedisplay();
@@ -198,6 +189,8 @@ void display()
     
     Ladder ladder(xx, yy);
     ladder.draw();
+
+
 
     Thorns Thorn0(980, 10); // x coordinate value and no of thorns
 

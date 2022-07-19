@@ -160,14 +160,28 @@ Platforms::Platforms(int xx1, int yy1, int xx2, int yy2)
 
 Ladder::Ladder(int x, int y)
 {
-    this->bottomLeft.x = 1460;
-    this->bottomLeft.y = 560;
-    this->bottomRight.x = 1500;
-    this->bottomRight.y = 560;
-    this->topRight.x = 1500;
-    this->topRight.y = 980;
-    this->topLeft.x = 1460;
-    this->topLeft.y = 980;
+    if (x > 780)
+    {
+        this->bottomLeft.x = 1460;
+        this->bottomLeft.y = 560;
+        this->bottomRight.x = 1500;
+        this->bottomRight.y = 560;
+        this->topRight.x = 1500;
+        this->topRight.y = 980;
+        this->topLeft.x = 1460;
+        this->topLeft.y = 980;
+    }
+    if (x < 780)
+    {
+        this->bottomLeft.x = 100;
+        this->bottomLeft.y = 68;
+        this->bottomRight.x = 140;
+        this->bottomRight.y = 68;
+        this->topRight.x = 140;
+        this->topRight.y = 480;
+        this->topLeft.x = 100;
+        this->topLeft.y = 480;
+    }
 }
 
 void Ladder::draw()

@@ -52,13 +52,13 @@ void blockCollision(Human &human, Blocks &block)
         upInAir = 1;
     }
 
-    if(collideX)
-    {
-        moveRight = 0;
-    }
-    else{
-        moveRight = 1;
-    }
+    //if(collideX)
+    //{
+    //    moveRight = 0;
+    //}
+    //else{
+    //    moveRight = 1;
+    //}
 }
 
 void diamondCollision(Human &human, Diamonds &diamond0)
@@ -77,13 +77,13 @@ void diamondCollision(Human &human, Diamonds &diamond0)
 
 void ThornCollision(Human &human, Thorns &Thorn)
 {
-    bool collideX = human.bottomLeft.x <= 980;
+    bool collideX = human.bottomLeft.x <= 980 && human.bottomRight.x >= Thorn.x * Thorn.n;
     bool collideY = human.bottomLeft.y <= 50;
     bool collided = collideX && collideY;
     if(collided)
     {
         std::cout<<"You died";
-        std::exit(0);
+        //std::exit(0);
     }
 
 
