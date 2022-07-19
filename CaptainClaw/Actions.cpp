@@ -77,13 +77,13 @@ void diamondCollision(Human &human, Diamonds &diamond0)
 
 void ThornCollision(Human &human, Thorns &Thorn)
 {
-    bool collideX = human.bottomLeft.x <= 980 && human.bottomRight.x >= Thorn.x * Thorn.n;
+    bool collideX = human.bottomLeft.x <= 980 && human.bottomLeft.x >= 800;
     bool collideY = human.bottomLeft.y <= 50;
     bool collided = collideX && collideY;
     if(collided)
     {
         std::cout<<"You died";
-        //std::exit(0);
+        std::exit(0);
     }
 
 
