@@ -1,5 +1,4 @@
 #include "Render.h"
-#include<Windows.h>
 
 extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft, gameOverFlag;
 
@@ -25,27 +24,21 @@ void ladderCollision(Human &human , Ladder &ladder)
     bool collideX = ( human.bottomLeft.x >= ladder.bottomLeft.x && human.bottomRight.x <= ladder.bottomRight.x ); 
     bool collideY = ( human.bottomLeft.y <= ladder.topLeft.y+51 && ladder.bottomLeft.y >= human.bottomLeft.y+51 );
     bool collided = collideX && collideY;
-    if(collideX)
+    if(collideX && human.bottomLeft.y > 900|| human.bottomLeft.y < 940 && human.bottomLeft.y >= 440)
     {
         moveDownFlag = 1;
         level = 2;
+    }
+    else if (collideX && human.bottomLeft.y > 400 || human.bottomLeft.y < 440 && human.bottomLeft.y >= 0)
+    {
+        moveDownFlag = 1;
+        level = 3;
     }
     else
     {
         moveDownFlag = 0;
         level = 1;
-    }
-    if(human.bottomLeft.y < 940 && human.bottomLeft.y>=440)
-    {
-        moveDownFlag = 1;
-        level = 2;
-    }
-    if (human.bottomLeft.y < 440)
-    {
-        moveDownFlag = 1;
-        level = 3;
-    }
-    
+    } 
 }
 
 void blockCollision(Human &human, Blocks &block)
@@ -79,8 +72,6 @@ void diamondCollision(Human &human, Diamonds &diamond0)
         diamond0.enabled = 0;
         diamondCollected += 1;
     }
-
-
 }
 
 void ThornCollision(Human &human, Thorns &Thorn)
@@ -92,9 +83,5 @@ void ThornCollision(Human &human, Thorns &Thorn)
     {
         std::cout<<"You died";
         gameOverFlag = 1;
-
-
     }
-
-
 }

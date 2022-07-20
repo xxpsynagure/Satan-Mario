@@ -12,7 +12,11 @@
 //Position of player
 int xx = 0;
 int yy = 940;
+
+//window resolution
 GLint width1, height1;
+
+//Flags
 int moveDownFlag = 0;
 int goWhereFlag = 1;
 int flag = 1;
@@ -20,10 +24,12 @@ int level = 0;
 int upInAir = 0;
 int moveRight = 1, moveLeft = 1;
 int gameOverFlag = 0;
+
 // game map size = 1536*1536
 //level 1 - 940
 //level 2 - 440
 //level 3 - 0
+
 GLdouble left=0.0, right= 2000.0, bottom=0.0, top = 1000.0 ;
 float deltaTime, oldTime;
 Diamonds diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, diamond7;
@@ -277,7 +283,7 @@ void display()
             gluOrtho2D(left, right, bottom, top);
             glViewport(0, 0, width1, height1);
             end();
-
+            std::cout << "Total Diamonds: " << diamondCollected << std::endl;
         }
 
 
