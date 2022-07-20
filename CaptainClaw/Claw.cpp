@@ -24,6 +24,7 @@ int level = 0;
 int upInAir = 0;
 int moveRight = 1, moveLeft = 1;
 int gameOverFlag = 0;
+int youWinFlag = 0;
 
 // game map size = 1536*1536
 //level 1 - 940
@@ -65,13 +66,14 @@ void reshape(GLsizei width, GLsizei height) {
 
 void fallDown(int value)
 {
+   
     if (yy > 940 && level==1 && upInAir==1)
     {
         yy-=3;
         if (flag == 1) xx ++;
         else xx -= 0.5;
     }
-    if (level == 3&& yy>=0)
+    if (level == 3 && yy>=0 && xx<1526)
     {
         yy -= 3;
         xx++;
@@ -93,7 +95,10 @@ void fallDown(int value)
     else
         upInAir = 0;
     //std::cout <<"flag: " << flag << std::endl;
-    glutTimerFunc(30, fallDown, 0);
+    if (youWinFlag == 1)
+        glutTimerFunc(3, NULL, 0);
+    else
+        glutTimerFunc(30, fallDown, 0);
     glutPostRedisplay();
 }
 
@@ -174,19 +179,16 @@ void specialkey(int key, int x, int y)
 
 void keyPressed(unsigned char key, int x, int y)
 {
-    if (key == 27)
+    if (key == 27) //escape key
         exit(0);
-    else if (key == 32)
+    else if (key == 32 && yy == 940) //space key
     {
-        if (yy == 940)
-        {
-            yy += 102;
-            if (flag == 1) xx += 40;
-            else xx -= 40;
-        }
-        std::cout << "JUMP: " << xx << "\t" << yy << std::endl;
+        yy += 102;
+        if (flag == 1) xx += 40;
+        else xx -= 40;
+        //std::cout << "JUMP: " << xx << "\t" << yy << std::endl;
     }
-    else if (key == 13)
+    else if (key == 13 && level == 0) //enter key
     {
         level = 1;
         left = 0.0, right = 768.0, bottom = 768.0, top = 1536.0;
@@ -214,6 +216,16 @@ void display()
     if (level == 0)
     {
         intro();
+    }
+    else if (level == 3 && yy < 440 && yy >= 0 && xx >= 1526)
+    {
+        left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0; 
+        //Sleep(1000);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(left, right, bottom, top);
+        glViewport(0, 0, width1, height1);
+        win();
     }
     else
     {

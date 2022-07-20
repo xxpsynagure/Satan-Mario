@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Texture.h"
 
-GLuint bg_texture, intro_texture, end_texture;
+GLuint bg_texture, intro_texture, end_texture, win_texture;
 extern int width1, height1;
 extern int level;
 
@@ -28,7 +28,6 @@ void background() {
 void loadtexture()
 {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    //PixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(1, &bg_texture);
     glBindTexture(GL_TEXTURE_2D, bg_texture);
 
@@ -112,7 +111,31 @@ void loadtexture()
     }
     stbi_image_free(data1);
 
+    //---------------------------------------------------------------------------------------------------------------------
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGenTextures(1, &win_texture);
+    glBindTexture(GL_TEXTURE_2D, win_texture);
 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+    int widtha, heighta, nrChannelsa;
+    unsigned char* data4 = stbi_load("Res/Textures/win.png", &widtha, &heighta, &nrChannelsa, 4);
+
+    if (data4)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, widtha, heighta, 0, GL_RGBA, GL_UNSIGNED_BYTE, data4);
+    }
+    else
+    {
+        std::cout << "Failed to load background" << std::endl;
+    }
+    stbi_image_free(data4);
+
+    //------------------------------------------------------------------------------------------------------------------
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -143,6 +166,24 @@ void end() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glBindTexture(GL_TEXTURE_2D, end_texture);
+
+    //Image size = 2000*1000
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void win() {
+    glEnable(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, win_texture);
 
     //Image size = 2000*1000
     glBegin(GL_QUADS);
