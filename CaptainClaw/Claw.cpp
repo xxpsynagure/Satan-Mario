@@ -139,7 +139,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_UP: 
-        if (yy < 1440)
+        if (level!=1 && yy < 1440)
         {
             upInAir = 1;
             yy += 10;

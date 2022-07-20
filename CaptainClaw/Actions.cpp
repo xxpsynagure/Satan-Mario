@@ -31,7 +31,7 @@ void ladderCollision(Human &human , Ladder &ladder)
     }
     else if (collideX && human.bottomLeft.y > 400 || human.bottomLeft.y < 440 && human.bottomLeft.y >= 0)
     {
-        moveDownFlag = 1;
+        moveDownFlag = 2;
         level = 3;
     }
     else

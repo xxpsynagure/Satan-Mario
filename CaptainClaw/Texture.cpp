@@ -40,12 +40,12 @@ void loadtexture()
     int width, height, nrChannels;
     unsigned char* data2 = stbi_load("Res/Textures/level1_background.png", &width, &height, &nrChannels, 4);
 
-    if (stbi_failure_reason())
-        std::cout << stbi_failure_reason();
+    //if (stbi_failure_reason())
+    //    std::cout << stbi_failure_reason();
 
     if (data2)
     {
-        std::cout << data2 << std::endl;
+        //std::cout << data2 << std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
     }
     else
@@ -58,7 +58,6 @@ void loadtexture()
 //------------------------------------------------------------------------------------------------------------------
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    //PixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(1, &end_texture);
     glBindTexture(GL_TEXTURE_2D, end_texture);
 
@@ -70,12 +69,12 @@ void loadtexture()
     int widthe, heighte, nrChannelse;
     unsigned char* data3 = stbi_load("Res/Textures/2.png", &widthe, &heighte, &nrChannelse, 4);
 
-    if (stbi_failure_reason())
-        std::cout << stbi_failure_reason();
+    //if (stbi_failure_reason())
+    //    std::cout << stbi_failure_reason();
 
     if (data3)
     {
-        std::cout << data3 << std::endl;
+        //std::cout << data3 << std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, widthe, heighte, 0, GL_RGBA, GL_UNSIGNED_BYTE, data3);
     }
     else
@@ -99,12 +98,12 @@ void loadtexture()
     int widthk, heightk, nrChannelsk;
     unsigned char* data1 = stbi_load("Res/Textures/intro.png", &widthk, &heightk, &nrChannelsk, 4);
 
-    if (stbi_failure_reason())
-        std::cout << stbi_failure_reason();
+    //if (stbi_failure_reason())
+    //    std::cout << stbi_failure_reason();
 
     if (data1)
     {
-        std::cout << data1 << std::endl;
+        //std::cout << data1 << std::endl;
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, widthk, heightk, 0, GL_RGBA, GL_UNSIGNED_BYTE, data1);
     }
     else
