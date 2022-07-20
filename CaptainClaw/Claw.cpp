@@ -16,11 +16,15 @@ GLint width1, height1;
 int moveDownFlag = 0;
 int goWhereFlag = 1;
 int flag = 1;
-int level = 1;
+int level = 0;
 int upInAir = 0;
 int moveRight = 1, moveLeft = 1;
+int gameOverFlag = 0;
 // game map size = 1536*1536
-GLdouble left=0.0, right= 768.0, bottom=768.0, top = 1536.0 ;
+//level 1 - 940
+//level 2 - 440
+//level 3 - 0
+GLdouble left=0.0, right= 2000.0, bottom=0.0, top = 1000.0 ;
 float deltaTime, oldTime;
 Diamonds diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, diamond7;
 int diamondCollected = 0;
@@ -60,6 +64,25 @@ void fallDown(int value)
         yy-=3;
         if (flag == 1) xx ++;
         else xx -= 0.5;
+    }
+    if (level == 3&& yy>=0)
+    {
+        yy -= 3;
+        xx++;
+        if (bottom > 0.0)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            top -= 3; bottom -= 3;
+            gluOrtho2D(left, right, bottom, top);
+        }
+        if (right < 1536.0 && xx >= 165)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            left ++; right ++;
+            gluOrtho2D(left, right, bottom, top);
+        }
     }
     else
         upInAir = 0;
@@ -157,6 +180,16 @@ void keyPressed(unsigned char key, int x, int y)
         }
         std::cout << "JUMP: " << xx << "\t" << yy << std::endl;
     }
+    else if (key == 13)
+    {
+        level = 1;
+        left = 0.0, right = 768.0, bottom = 768.0, top = 1536.0;
+        glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(left, right, bottom, top);
+        glViewport(0, 0, width1, height1);
+    }
     glutPostRedisplay();
 }
 
@@ -172,65 +205,86 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+    if (level == 0)
+    {
+        intro();
+    }
+    else
+    {
+        background();
+        // drawPlatforms(100, 100, 200, 100);
+        // drawPlatforms(400, 550, 500, 550);
+        // drawPlatforms(900, 320, 1050, 320);
+        // Platforms platform0(350, 1050, 450, 1050);
+        Blocks block0(320, 1000);
+        Blocks block1(320, 1031);
+        Blocks block2(331, 1000);
+        Blocks block3(331, 1031);
+        // Blocks block4(320, 1031);
+        // Platforms platform1(100, 100, 200, 100);
+        // Platforms platform2(400, 550, 500, 550);
+        // Platforms platform3(900, 320, 1050, 320);
+        std::cout << "level " << level << std::endl;
+        Ladder ladder(xx, yy);
+        ladder.draw();
+
+
+
+        Thorns Thorn0(980, 10); // x coordinate value and no of thorns
+
+        if (diamond0.enabled == 1)
+        {
+            diamond0.draw(400, 1050);
+        }
+        if (diamond1.enabled == 1)
+        {
+            diamond1.draw(450, 1050);
+        }
+        if (diamond2.enabled == 1)
+        {
+            diamond2.draw(500, 1050);
+        }
+        if (diamond3.enabled == 1)
+        {
+            diamond3.draw(500, 800);
+        }
+        if (diamond4.enabled == 1)
+        {
+            diamond4.draw(430, 600);
+        }
+        if (diamond5.enabled == 1)
+        {
+            diamond5.draw(300, 300);
+        }
+        if (diamond6.enabled == 1)
+        {
+            diamond6.draw(500, 400);
+        }
+
+        Human human(xx, yy);
+        human.draw();
+        // std::cout<<xx<<" "<<yy;
+        if (gameOverFlag == 1) {
+            //glRasterPos2f(980, 100);
+            //glutBitmapString(GLUT_BITMAP_8_BY_13, (const unsigned char*)"Game Over");
+            Sleep(1000);
+            //std::exit(0);
+
+            left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
+
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            gluOrtho2D(left, right, bottom, top);
+            glViewport(0, 0, width1, height1);
+            end();
+
+        }
+
+
+        checkObjectsCollisions(human, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, Thorn0);
+
+    }
     
-    background();
-    // drawPlatforms(100, 100, 200, 100);
-    // drawPlatforms(400, 550, 500, 550);
-    // drawPlatforms(900, 320, 1050, 320);
-    // Platforms platform0(350, 1050, 450, 1050);
-    Blocks block0(320, 1000);
-    Blocks block1(320, 1031);
-    Blocks block2(331, 1000);
-    Blocks block3(331, 1031);
-    // Blocks block4(320, 1031);
-    // Platforms platform1(100, 100, 200, 100);
-    // Platforms platform2(400, 550, 500, 550);
-    // Platforms platform3(900, 320, 1050, 320);
-    
-    Ladder ladder(xx, yy);
-    ladder.draw();
-
-
-
-    Thorns Thorn0(980, 10); // x coordinate value and no of thorns
-
-    if(diamond0.enabled == 1)
-    {
-        diamond0.draw(400, 1050);
-    }
-    if(diamond1.enabled == 1)
-    {
-        diamond1.draw(450, 1050);
-    }
-    if(diamond2.enabled == 1)
-    {
-        diamond2.draw(500, 1050);
-    }
-    if(diamond3.enabled == 1)
-    {
-        diamond3.draw(500, 800);
-    }
-    if(diamond4.enabled == 1)
-    {
-        diamond4.draw(430, 600);
-    }
-    if(diamond5.enabled == 1)
-    {
-        diamond5.draw(300, 300);
-    }
-    if(diamond6.enabled == 1)
-    {
-        diamond6.draw(500, 400);
-    }
-
-    Human human(xx, yy);
-    human.draw();
-    // std::cout<<xx<<" "<<yy;
-    glRasterPos2f(200, 1400);
-    glutBitmapString(GLUT_BITMAP_8_BY_13, (const unsigned char*)"SATAN MARIO");
-
-    checkObjectsCollisions(human, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, Thorn0);
-
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
     // std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
