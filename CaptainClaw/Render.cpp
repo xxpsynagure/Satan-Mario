@@ -103,9 +103,9 @@ Ladder::Ladder(int x, int y)
         this->bottomRight.x = 90;
         this->bottomRight.y = 58;
         this->topRight.x = 90;
-        this->topRight.y = 470;//480
+        this->topRight.y = 480;//480
         this->topLeft.x = 50;
-        this->topLeft.y = 470;//480
+        this->topLeft.y = 480;//480
     }
 }
 

@@ -177,7 +177,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_DOWN: 
-        if (yy >= 430 && moveDownFlag==1 && level != 1   || yy < 440 && moveDownFlag != 0 && level == 3)
+        if (yy >= 430 && moveDownFlag==1 && level == 2 || yy < 440 && moveDownFlag != 0 && xx<90)
         {
             yy -= 10;
             if (bottom > 0.0 && yy <= 1150)
