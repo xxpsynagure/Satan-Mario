@@ -1,7 +1,9 @@
 #include <Windows.h>
 #include <GL/freeglut.h>
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
+#include <thread>
+#include <mutex>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
@@ -10,7 +12,7 @@
 #include "Actions.cpp"
 
 //Position of player
-int xx = 0;
+int xx = 30;
 int yy = 940;
 
 //window resolution
@@ -26,6 +28,8 @@ int moveRight = 1, moveLeft = 1;
 int gameOverFlag = 0;
 int youWinFlag = 0;
 
+std::mutex mu;
+
 // game map size = 1536*1536
 //level 1 - 940
 //level 2 - 440
@@ -35,8 +39,30 @@ GLdouble left=0.0, right= 2000.0, bottom=0.0, top = 1000.0 ;
 float deltaTime, oldTime;
 Diamonds diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, diamond7;
 int diamondCollected = 0;
+
+Thornsinv Thorn[100];
+
+void dokill()
+{
+    while (true)
+    {
+        //mu.lock();
+        if (level == 2)
+        {
+            int num = rand() % 90;
+            while (Thorn[num].y >= 480)
+            {
+                Thorn[num].y--;
+                std::this_thread::sleep_for(std::chrono::milliseconds(3));
+            }       
+        }
+        //mu.unlock();
+    }
+}
+std::thread kill(dokill);
 void init()
 {
+    
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
@@ -45,24 +71,6 @@ void init()
     glViewport(0, 0, width1, height1);
 
 }
-
-/*
-void reshape(GLsizei width, GLsizei height) {
-    if (height == 0) height = 1;
-    GLfloat aspect = (GLfloat)width / (GLfloat)height;
-
-    glViewport(0, 0, width, height);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    if (width >= height) {
-        gluOrtho2D(-1.0 * aspect, 1.0 * aspect, -1.0, 1.0);
-    }
-    else {
-        gluOrtho2D(-1.0, 1.0, -1.0 / aspect, 1.0 / aspect);
-    }
-}*/
-
 
 void fallDown(int value)
 {
@@ -148,7 +156,7 @@ void specialkey(int key, int x, int y)
         {
             upInAir = 1;
             yy += 10;
-            if (top < 1500)
+            if (top < 1536 && yy>=175)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -163,7 +171,7 @@ void specialkey(int key, int x, int y)
         if (yy > 0 && moveDownFlag!=0 && level != 1)
         {
             yy -= 10;
-            if (bottom > 0.0)
+            if (bottom > 0.0 && yy <= 1150)
             {
                 glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
@@ -180,7 +188,10 @@ void specialkey(int key, int x, int y)
 void keyPressed(unsigned char key, int x, int y)
 {
     if (key == 27) //escape key
+    {
         exit(0);
+    }
+        
     else if (key == 32 && yy == 940) //space key
     {
         yy += 102;
@@ -247,8 +258,12 @@ void display()
         ladder.draw();
 
 
-
-        Thorns Thorn0(980, 10); // x coordinate value and no of thorns
+        Thorns Thorn0(1556, 100); // x coordinate value and no of thorns
+        //Thorns Thorn1(400, 20);
+        for (int i = 0; i < 90; i++)
+        {
+            Thorn[i].draw();
+        }
 
         if (diamond0.enabled == 1)
         {
@@ -327,10 +342,19 @@ void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks
     diamondCollision(human, diamond5);
     diamondCollision(human, diamond6);
     ThornCollision(human, Thorn0);
+    //ThornCollision(human, Thorn1);
 }
 
 int main(int argc, char** argv)
 {
+    int x = 0;
+    for (int i = 0; i < 90; i++)
+    {
+        Thorn[i].init(x, 940);
+        x += 16;
+    }
+    
+
     glutInit(&argc, argv);
     width1 = glutGet(GLUT_SCREEN_WIDTH);
     height1 = glutGet(GLUT_SCREEN_HEIGHT);

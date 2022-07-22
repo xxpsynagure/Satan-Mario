@@ -76,10 +76,10 @@ void diamondCollision(Human &human, Diamonds &diamond0)
 
 void ThornCollision(Human &human, Thorns &Thorn)
 {
-    bool collideX = human.bottomLeft.x <= 980 && human.bottomLeft.x >= 800;
+    //bool collideX = human.bottomLeft.x <= 980 && human.bottomLeft.x >= 800;
     bool collideY = human.bottomLeft.y <= 50;
-    bool collided = collideX && collideY;
-    if(collided)
+    //bool collided = collideX && collideY;
+    if(collideY)
     {
         std::cout<<"You died";
         gameOverFlag = 1;

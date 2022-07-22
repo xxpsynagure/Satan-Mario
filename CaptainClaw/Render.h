@@ -74,6 +74,15 @@ public:
 
 };
 
+class Thornsinv {
+public:
+    GLfloat x=0, y=940;
+    void init(int,int);
+    void draw();
+};
+
+
+
 class Diamonds{
 private:
     /* data */
