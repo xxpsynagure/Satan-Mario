@@ -82,7 +82,6 @@ public:
 };
 
 
-
 class Diamonds{
 private:
     /* data */

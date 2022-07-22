@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <thread>
-#include <mutex>
+//#include <mutex>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
@@ -28,7 +28,7 @@ int moveRight = 1, moveLeft = 1;
 int gameOverFlag = 0;
 int youWinFlag = 0;
 
-std::mutex mu;
+//std::mutex mu;
 
 // game map size = 1536*1536
 //level 1 - 940
@@ -53,13 +53,14 @@ void dokill()
             while (Thorn[num].y >= 480)
             {
                 Thorn[num].y--;
-                std::this_thread::sleep_for(std::chrono::milliseconds(3));
+                std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }       
         }
         //mu.unlock();
     }
 }
 std::thread kill(dokill);
+
 void init()
 {
     
@@ -81,7 +82,15 @@ void fallDown(int value)
         if (flag == 1) xx ++;
         else xx -= 0.5;
     }
-    if (level == 3 && yy>=0 && xx<1526)
+    if (level == 2 && yy<940 &&yy>430)
+    {
+        yy -= 10;
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        top -= 10; bottom -= 10;
+        gluOrtho2D(left, right, bottom, top);
+    }
+    if (level == 3 && yy>=0 && yy<=430 && xx<1526)
     {
         yy -= 3;
         xx++;
@@ -152,7 +161,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_UP: 
-        if (level!=1 && yy < 1440)
+        if (level==3 && yy <= 430)
         {
             upInAir = 1;
             yy += 10;
@@ -168,7 +177,7 @@ void specialkey(int key, int x, int y)
         break;
 
     case GLUT_KEY_DOWN: 
-        if (yy > 0 && moveDownFlag!=0 && level != 1)
+        if (yy >= 430 && moveDownFlag==1 && level != 1   || yy < 440 && moveDownFlag != 0 && level == 3)
         {
             yy -= 10;
             if (bottom > 0.0 && yy <= 1150)
@@ -253,6 +262,7 @@ void display()
         // Platforms platform1(100, 100, 200, 100);
         // Platforms platform2(400, 550, 500, 550);
         // Platforms platform3(900, 320, 1050, 320);
+        
         std::cout << "level " << level << std::endl;
         Ladder ladder(xx, yy);
         ladder.draw();
@@ -260,10 +270,7 @@ void display()
 
         Thorns Thorn0(1556, 100); // x coordinate value and no of thorns
         //Thorns Thorn1(400, 20);
-        for (int i = 0; i < 90; i++)
-        {
-            Thorn[i].draw();
-        }
+        
 
         if (diamond0.enabled == 1)
         {
@@ -296,13 +303,13 @@ void display()
 
         Human human(xx, yy);
         human.draw();
-        // std::cout<<xx<<" "<<yy;
+        std::cout<<xx<<" "<<yy<<std::endl;
+        for (int i = 0; i < 90; i++)
+        {
+            Thorn[i].draw();
+        }
         if (gameOverFlag == 1) {
-            //glRasterPos2f(980, 100);
-            //glutBitmapString(GLUT_BITMAP_8_BY_13, (const unsigned char*)"Game Over");
             Sleep(1000);
-            //std::exit(0);
-
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
 
             glMatrixMode(GL_PROJECTION);
@@ -310,7 +317,6 @@ void display()
             gluOrtho2D(left, right, bottom, top);
             glViewport(0, 0, width1, height1);
             end();
-            std::cout << "Total Diamonds: " << diamondCollected << std::endl;
         }
 
 

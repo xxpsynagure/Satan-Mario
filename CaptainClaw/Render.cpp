@@ -98,14 +98,14 @@ Ladder::Ladder(int x, int y)
     }
     if (x < 780)
     {
-        this->bottomLeft.x = 100;
-        this->bottomLeft.y = 68;
-        this->bottomRight.x = 140;
-        this->bottomRight.y = 68;
-        this->topRight.x = 140;
-        this->topRight.y = 480;
-        this->topLeft.x = 100;
-        this->topLeft.y = 480;
+        this->bottomLeft.x = 50;
+        this->bottomLeft.y = 58;
+        this->bottomRight.x = 90;
+        this->bottomRight.y = 58;
+        this->topRight.x = 90;
+        this->topRight.y = 470;//480
+        this->topLeft.x = 50;
+        this->topLeft.y = 470;//480
     }
 }
 

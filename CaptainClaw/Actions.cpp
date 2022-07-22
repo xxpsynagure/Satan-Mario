@@ -24,12 +24,14 @@ void ladderCollision(Human &human , Ladder &ladder)
     bool collideX = ( human.bottomLeft.x >= ladder.bottomLeft.x && human.bottomRight.x <= ladder.bottomRight.x ); 
     bool collideY = ( human.bottomLeft.y <= ladder.topLeft.y+51 && ladder.bottomLeft.y >= human.bottomLeft.y+51 );
     bool collided = collideX && collideY;
-    if(collideX && human.bottomLeft.y > 900|| human.bottomLeft.y < 940 && human.bottomLeft.y >= 440)
+
+    /*
+    if(collideX && human.bottomLeft.y > 900|| human.bottomLeft.y < 940 && human.bottomLeft.y > 430)
     {
         moveDownFlag = 1;
         level = 2;
     }
-    else if (collideX && human.bottomLeft.y > 400 || human.bottomLeft.y < 440 && human.bottomLeft.y >= 0)
+    if (collideX && human.bottomLeft.y < 430 || human.bottomLeft.y <= 430 && human.bottomLeft.y >= 0)
     {
         moveDownFlag = 2;
         level = 3;
@@ -39,6 +41,22 @@ void ladderCollision(Human &human , Ladder &ladder)
         moveDownFlag = 0;
         level = 1;
     } 
+    */
+    if (collideX && level == 1 && human.bottomLeft.y > 900 || human.bottomLeft.y < 900 && human.bottomLeft.y > 400)
+    {
+        moveDownFlag = 1;
+        level = 2;
+    }
+    if (collideX && level == 2 && human.bottomLeft.y < 470 || human.bottomLeft.y < 430 && human.bottomLeft.y >= 0)
+    {
+        moveDownFlag = 2;
+        level = 3;
+    }
+    if(!collideX && human.bottomLeft.y > 900)
+    {
+        moveDownFlag = 0;
+        level = 1;
+    }
 }
 
 void blockCollision(Human &human, Blocks &block)
