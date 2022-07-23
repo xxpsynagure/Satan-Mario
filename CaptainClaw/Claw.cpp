@@ -54,12 +54,12 @@ void dokill()
             {
                 Thorn[num].y--;
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
-            }       
+            }
         }
         //mu.unlock();
     }
 }
-std::thread kill(dokill);
+
 
 void init()
 {
@@ -108,6 +108,7 @@ void fallDown(int value)
             left ++; right ++;
             gluOrtho2D(left, right, bottom, top);
         }
+
     }
     else
         upInAir = 0;
@@ -359,7 +360,7 @@ int main(int argc, char** argv)
         Thorn[i].init(x, 940);
         x += 16;
     }
-    
+    std::thread kill(dokill);
 
     glutInit(&argc, argv);
     width1 = glutGet(GLUT_SCREEN_WIDTH);
