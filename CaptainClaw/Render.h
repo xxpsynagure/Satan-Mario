@@ -99,3 +99,12 @@ public:
 };
 
 
+class Pit{
+private:
+    /* data */
+public:
+    GLfloat theta;
+    Pit();
+    ~Pit(){}
+
+};

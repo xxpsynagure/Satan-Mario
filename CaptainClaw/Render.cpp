@@ -85,28 +85,36 @@ Platforms::Platforms(int xx1, int yy1, int xx2, int yy2)
 
 Ladder::Ladder(int x, int y)
 {
-    if (x > 780)
-    {
-        this->bottomLeft.x = 1460;
-        this->bottomLeft.y = 560;
-        this->bottomRight.x = 1500;
-        this->bottomRight.y = 560;
-        this->topRight.x = 1500;
-        this->topRight.y = 980;
-        this->topLeft.x = 1460;
-        this->topLeft.y = 980;
-    }
-    if (x < 780)
-    {
-        this->bottomLeft.x = 50;
-        this->bottomLeft.y = 58;
-        this->bottomRight.x = 90;
-        this->bottomRight.y = 58;
-        this->topRight.x = 90;
-        this->topRight.y = 480;//480
-        this->topLeft.x = 50;
-        this->topLeft.y = 480;//480
-    }
+    this->bottomLeft.x = 1460;
+    this->bottomLeft.y = 560;
+    this->bottomRight.x = 1500;
+    this->bottomRight.y = 560;
+    this->topRight.x = 1500;
+    this->topRight.y = 980;
+    this->topLeft.x = 1460;
+    this->topLeft.y = 980;
+    // if (x > 780)
+    // {
+    //     this->bottomLeft.x = 1460;
+    //     this->bottomLeft.y = 560;
+    //     this->bottomRight.x = 1500;
+    //     this->bottomRight.y = 560;
+    //     this->topRight.x = 1500;
+    //     this->topRight.y = 980;
+    //     this->topLeft.x = 1460;
+    //     this->topLeft.y = 980;
+    // }
+    // if (x < 780)
+    // {
+    //     this->bottomLeft.x = 50;
+    //     this->bottomLeft.y = 58;
+    //     this->bottomRight.x = 90;
+    //     this->bottomRight.y = 58;
+    //     this->topRight.x = 90;
+    //     this->topRight.y = 480;//480
+    //     this->topLeft.x = 50;
+    //     this->topLeft.y = 480;//480
+    // }
 }
 
 void Ladder::draw()
@@ -231,5 +239,18 @@ void Thornsinv::draw()
     glVertex2f(x, y);
     glVertex2f(x + 8, y-55);
     glVertex2f(x + 16, y);
+    glEnd();
+}
+
+Pit::Pit()
+{
+    glColor3f(1.0, 1.0, 0.0);
+
+    glBegin(GL_POLYGON); // PIT
+    for (int i = 0; i < 360; i++)
+    {
+        this->theta = i * 3.14159 / 180;
+        glVertex2f(50 + cos(this->theta) * 35, 480 + sin(this->theta) * 15);
+    }
     glEnd();
 }

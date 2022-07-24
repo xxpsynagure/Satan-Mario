@@ -7,8 +7,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-// #include "./Render.cpp"
-// #include "./Texture.cpp"
+#include "./Render.cpp"
+#include "./Texture.cpp"
 #include "./Actions.cpp"
 #include "./Threads.cpp"
 
@@ -325,11 +325,13 @@ void display()
         */
         
         human.draw();
-        std::cout<<xx<<" "<<yy<<std::endl;
+        // std::cout<<xx<<" "<<yy<<std::endl;
         for (int i = 0; i < 90; i++)
         {
             Thorn[i].draw();
         }
+        Pit pit;
+
         if (gameOverFlag == 1) {
             Sleep(1000);
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
