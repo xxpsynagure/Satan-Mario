@@ -7,9 +7,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-// #include "./Render.cpp"
-// #include "./Texture.cpp"
-#include "Actions.cpp"
+#include "./Render.cpp"
+#include "./Texture.cpp"
+#include "./Actions.cpp"
 
 //Position of player
 int xx = 30;
@@ -46,11 +46,10 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
-void dokill()
+DWORD WINAPI killThread(LPVOID lpParameter)
 {
     while (true)
     {
-        //mu.lock();
         if (level == 2)
         {
             int num = rand() % 90;
@@ -65,9 +64,31 @@ void dokill()
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
         }
-        //mu.unlock();
     }
 }
+
+// void dokill()
+// {
+//     while (true)
+//     {
+//         //mu.lock();
+//         if (level == 2)
+//         {
+//             int num = rand() % 90;
+//             while (Thorn[num].y >= 480)
+//             {
+//                 Thorn[num].y--;
+//                 //Thorn collision
+//                 if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-16 && Thorn[num].x + 16 <= xx+16) {
+//                     gameOverFlag = 1;
+//                     Sleep(1000);
+//                 }
+//                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
+//             }
+//         }
+//         //mu.unlock();
+//     }
+// }
 
 void init()
 {
@@ -377,7 +398,13 @@ int main(int argc, char** argv)
         Thorn[i].init(x, 940);
         x += 16;
     }
-    std::thread kill(dokill);
+    // std::thread kill(dokill);
+    
+    HANDLE hThread = CreateThread(NULL, 0, killThread, NULL, 0, NULL);
+    if(gameOverFlag == 1)
+    {
+        CloseHandle(hThread);
+    }
 
     for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
     {
