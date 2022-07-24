@@ -4,13 +4,14 @@
 #include <cstdlib>
 #include <thread>
 #include <string>
+#include <fstream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-//#include "./Render.cpp"
-//#include "./Texture.cpp"
-#include "Actions.cpp"
-#include "Threads.cpp"
+#include "./Render.cpp"
+#include "./Texture.cpp"
+#include "./Actions.cpp"
+#include "./Threads.cpp"
 
 //Position of player
 int xx = 30;
@@ -47,6 +48,9 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
+std::string score;
+std::ifstream scoreFile("scoreFile.txt");
+
 void init()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -55,6 +59,14 @@ void init()
     glLoadIdentity();
     gluOrtho2D(left, right, bottom, top);
     glViewport(0, 0, width1, height1);
+
+    if(scoreFile.is_open())
+    {
+    std::getline(scoreFile, score);
+    scoreFile.close();
+    }
+    else
+        std::cout<<"Unable to open file!\n File ERROR\n Because file may not be created yet\n";
 }
 
 void specialkey(int key, int x, int y)
@@ -234,8 +246,17 @@ void display()
         glRasterPos2f(left + 75, top-50);
         std::string str = std::to_string(diamondCollected);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
+        glRasterPos2f(right - 100, top - 50);
+        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"HIGH SCORE: ");
+        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)score.c_str());
         
         if (gameOverFlag == 1) {
+            // WRITING HIGHSCORE TO THE FILE
+            std::ofstream scoreFile;
+            scoreFile.open("scoreFile.txt");
+            scoreFile << str;
+            scoreFile.close();
+
             Sleep(1000);
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
 
