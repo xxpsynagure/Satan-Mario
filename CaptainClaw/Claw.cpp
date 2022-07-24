@@ -66,7 +66,14 @@ void init()
     scoreFile.close();
     }
     else
-        std::cout<<"Unable to open file!\n File ERROR\n Because file may not be created yet\n";
+    {
+        std::ofstream scoreFile;
+        scoreFile.open("scoreFile.txt");
+        scoreFile << "0";
+        scoreFile.close();
+    }
+    std::cout<<typeid(score).name()<<std::endl;
+
 }
 
 void specialkey(int key, int x, int y)
@@ -252,10 +259,13 @@ void display()
         
         if (gameOverFlag == 1) {
             // WRITING HIGHSCORE TO THE FILE
-            std::ofstream scoreFile;
-            scoreFile.open("scoreFile.txt");
-            scoreFile << str;
-            scoreFile.close();
+            if(str > score)
+            {
+                std::ofstream scoreFile;
+                scoreFile.open("scoreFile.txt");
+                scoreFile << str;
+                scoreFile.close();
+            }
 
             Sleep(1000);
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
