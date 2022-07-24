@@ -15,8 +15,8 @@ DWORD WINAPI killThread(LPVOID lpParameter)
             while (Thorn[num].y >= 480)
             {
                 Thorn[num].y--;
-                //Thorn collision
-                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-16 && Thorn[num].x + 16 <= xx+16) {
+                //Thorninv collision
+                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-7 && Thorn[num].x + 16 <= xx+18) {
                     gameOverFlag = 1;
                     Sleep(1000);
                 }

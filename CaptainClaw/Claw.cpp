@@ -3,20 +3,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <thread>
-//#include <mutex>
+#include <string>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-#include "./Render.cpp"
-#include "./Texture.cpp"
-#include "./Actions.cpp"
-#include "./Threads.cpp"
+//#include "./Render.cpp"
+//#include "./Texture.cpp"
+#include "Actions.cpp"
+#include "Threads.cpp"
 
 //Position of player
 int xx = 30;
 int yy = 940;
 
-int point_count = 0;
 //window resolution
 GLint width1, height1;
 
@@ -31,11 +30,10 @@ int gameOverFlag = 0;
 int youWinFlag = 0;
 int allThornDown = 0;
 
-//std::mutex mu;
 
 // game map size = 1536*1536
 //level 1 - 940
-//level 2 - 440
+//level 2 - 430
 //level 3 - 0
 
 GLdouble left=0.0, right= 2000.0, bottom=0.0, top = 1000.0 ;
@@ -223,13 +221,19 @@ void display()
         }
         diamondCollected = count;
         human.draw();
-        std::cout<<xx<<" "<<yy<<std::endl;
+        //std::cout<<xx<<" "<<yy<<std::endl;
         Pit pit;
         for (int i = 0; i < 90; i++)
         {
             Thorn[i].draw();
         }
 
+        glColor3f(1.0, 1.0, 1.0);
+        glRasterPos2f(left + 20, top - 50);
+        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"SCORE: ");
+        glRasterPos2f(left + 75, top-50);
+        std::string str = std::to_string(diamondCollected);
+        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
         
         if (gameOverFlag == 1) {
             Sleep(1000);
@@ -247,7 +251,7 @@ void display()
     
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
-    std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
+    //std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
 
 }
 
@@ -304,8 +308,8 @@ int main(int argc, char** argv)
     glutKeyboardFunc(keyPressed);
     //glutReshapeFunc(reshape);
     glutTimerFunc(30, fallDown, 0);
-    std::cout << glGetString(GL_VERSION)<<std::endl;
-    std::cout << width1 << "  " << height1 << std::endl;
+    //std::cout << glGetString(GL_VERSION)<<std::endl;
+    //std::cout << width1 << "  " << height1 << std::endl;
     glutMainLoop();
     return 0;
 }
