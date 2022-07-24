@@ -387,8 +387,8 @@ int main(int argc, char** argv)
 
     for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
     {
-        diamond_lvl1[i].init(x, 1050);
-        diamond_lvl2[i].init(x, 500);
+        diamond_lvl1[i].init(x, 1080);
+        // diamond_lvl2[i].init(x, 500);
         diamond_lvl3[i].init(x, y);
     }
 

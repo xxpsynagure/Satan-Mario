@@ -22,7 +22,7 @@ void platformCollision(Human &human, Platforms &platform)
 void ladderCollision(Human &human , Ladder &ladder)
 {
     bool collideX = ( human.bottomLeft.x >= ladder.bottomLeft.x && human.bottomRight.x <= ladder.bottomRight.x ); 
-    bool collideY = ( human.bottomLeft.y <= ladder.topLeft.y+51 && ladder.bottomLeft.y >= human.bottomLeft.y+51 );
+    bool collideY = ( human.bottomLeft.y >= ladder.bottomLeft.y && ladder.bottomRight.y <= human.bottomRight.y );
     bool collided = collideX && collideY;
 
     /*
@@ -42,17 +42,17 @@ void ladderCollision(Human &human , Ladder &ladder)
         level = 1;
     } 
     */
-    if (collideX && level == 1 && human.bottomLeft.y > 900 || human.bottomLeft.y < 900 && human.bottomLeft.y > 400)
+    if (collided && level == 1 && human.bottomLeft.y > 900 || human.bottomLeft.y < 900 && human.bottomLeft.y > 400)
     {
         moveDownFlag = 1;
         level = 2;
     }
-    if (collideX && level == 2 && human.bottomLeft.y < 470 || human.bottomLeft.y < 430 && human.bottomLeft.y >= 0)
+    if (collided && level == 2 && human.bottomLeft.y < 470 || human.bottomLeft.y < 430 && human.bottomLeft.y >= 0)
     {
         moveDownFlag = 2;
         level = 3;
     }
-    if(!collideX && human.bottomLeft.y > 900)
+    if(!collided && human.bottomLeft.y > 900)
     {
         moveDownFlag = 0;
         level = 1;
@@ -82,8 +82,8 @@ void blockCollision(Human &human, Blocks &block)
 
 void diamondCollision(Human &human, Diamonds &diamond0)
 {
-    bool collideX = human.bottomRight.x >= diamond0.bottom.x-5;
-    bool collideY = diamond0.bottom.y >= human.bottomRight.y && diamond0.top.y <= human.topRight.y;
+    bool collideX = human.bottomRight.x >= diamond0.left.x && human.bottomLeft.x <= diamond0.right.x;
+    bool collideY = human.topRight.y >= diamond0.bottom.y && human.bottomLeft.y <= diamond0.top.y;
 
     if(collideX & collideY){
         // std::cout<<"diamond is destroyed";

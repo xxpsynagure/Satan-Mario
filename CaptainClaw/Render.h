@@ -105,6 +105,5 @@ private:
 public:
     GLfloat theta;
     Pit();
-    ~Pit(){}
 
 };
