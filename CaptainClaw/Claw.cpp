@@ -16,6 +16,7 @@
 int xx = 30;
 int yy = 940;
 
+int point_count = 0;
 //window resolution
 GLint width1, height1;
 
@@ -48,30 +49,6 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
-
-void dokill()
-{
-    while (true)
-    {
-        //mu.lock();
-        if (level == 2)
-        {
-            int num = rand() % 90;
-            while (Thorn[num].y >= 480)
-            {
-                Thorn[num].y--;
-                //Thorn collision
-                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-16 && Thorn[num].x + 16 <= xx+16) {
-                    gameOverFlag = 1;
-                    Sleep(1000);
-                }
-                std::this_thread::sleep_for(std::chrono::milliseconds(2));
-            }
-        }
-        //mu.unlock();
-    }
-}
-
 void init()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -81,52 +58,6 @@ void init()
     gluOrtho2D(left, right, bottom, top);
     glViewport(0, 0, width1, height1);
 }
-
-void fallDown(int value)
-{ 
-    if (yy > 940 && level==1 && upInAir==1)
-    {
-        yy-=3;
-        if (flag == 1) xx ++;
-        else xx -= 0.5;
-    }
-    if (level == 2 && yy<940 &&yy>430)
-    {
-        yy -= 10;
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        top -= 10; bottom -= 10;
-        gluOrtho2D(left, right, bottom, top);
-    }
-    if (level == 3 && yy>=0 && yy<=430 && xx<1526)
-    {
-        yy -= 3;
-        xx++;
-        if (bottom > 0.0)
-        {
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            top -= 3; bottom -= 3;
-            gluOrtho2D(left, right, bottom, top);
-        }
-        if (right < 1536.0 && xx >= 165)
-        {
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            left ++; right ++;
-            gluOrtho2D(left, right, bottom, top);
-        }
-    }
-    else
-        upInAir = 0;
-    //std::cout <<"flag: " << flag << std::endl;
-    if (youWinFlag == 1)
-        glutTimerFunc(3, NULL, 0);
-    else
-        glutTimerFunc(30, fallDown, 0);
-    glutPostRedisplay();
-}
-
 
 void specialkey(int key, int x, int y)
 {
@@ -233,11 +164,12 @@ void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks
 
 void display()
 {
+    /*
     deltaTime = clock() - oldTime;
     double fps = (1.0 / deltaTime) * 1000;
     oldTime = clock();
-    //std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
-
+    std::cout << "Delta Time: " << deltaTime / CLOCKS_PER_SEC << "sec\tFPS: " << fps << std::endl;
+    */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     if (level == 0)
@@ -257,81 +189,48 @@ void display()
     else
     {
         background();
-        // drawPlatforms(100, 100, 200, 100);
-        // drawPlatforms(400, 550, 500, 550);
-        // drawPlatforms(900, 320, 1050, 320);
-        // Platforms platform0(350, 1050, 450, 1050);
         Blocks block0(320, 1000);
         Blocks block1(320, 1031);
         Blocks block2(331, 1000);
         Blocks block3(331, 1031);
-        // Blocks block4(320, 1031);
-        // Platforms platform1(100, 100, 200, 100);
-        // Platforms platform2(400, 550, 500, 550);
-        // Platforms platform3(900, 320, 1050, 320);
+        
         human.init(xx, yy);
         //std::cout << "level " << level << std::endl;
         Ladder ladder(xx, yy);
         ladder.draw();
 
-
-        Thorns Thorn0(1556, 100); // x coordinate value and no of thorns
-        //Thorns Thorn1(400, 20);
-        
+        Thorns Thorn0(1536, 100); // x coordinate value and no of thorns
+        int count = 0;
         for (int i = 0; i < 15; i++)
         {
-            if (diamond_lvl1[i].enabled == 1){
+            if (diamond_lvl1[i].enabled == 1) {
                 diamond_lvl1[i].draw();
                 diamondCollision(human, diamond_lvl1[i]);
             }
-            if (diamond_lvl2[i].enabled == 1){
+            else count++;
+
+            if (diamond_lvl2[i].enabled == 1) {
                 diamond_lvl2[i].draw();
                 diamondCollision(human, diamond_lvl2[i]);
-            }   
-            if (diamond_lvl3[i].enabled == 1){
+            }
+            else count++;
+
+            if (diamond_lvl3[i].enabled == 1) {
                 diamond_lvl3[i].draw();
                 diamondCollision(human, diamond_lvl3[i]);
             }
-                
+            else count++;
         }
-        /*
-        if (diamond0.enabled == 1)
-        {
-            diamond0.draw(400, 1050);
-        }
-        if (diamond1.enabled == 1)
-        {
-            diamond1.draw(450, 1050);
-        }
-        if (diamond2.enabled == 1)
-        {
-            diamond2.draw(500, 1050);
-        }
-        if (diamond3.enabled == 1)
-        {
-            diamond3.draw(500, 800);
-        }
-        if (diamond4.enabled == 1)
-        {
-            diamond4.draw(430, 600);
-        }
-        if (diamond5.enabled == 1)
-        {
-            diamond5.draw(300, 300);
-        }
-        if (diamond6.enabled == 1)
-        {
-            diamond6.draw(500, 400);
-        }
-        */
-        
+        diamondCollected = count;
         human.draw();
-        // std::cout<<xx<<" "<<yy<<std::endl;
+        std::cout<<xx<<" "<<yy<<std::endl;
         Pit pit;
         for (int i = 0; i < 90; i++)
         {
             Thorn[i].draw();
         }
+
+        
         if (gameOverFlag == 1) {
             Sleep(1000);
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
@@ -344,12 +243,11 @@ void display()
         }
 
         checkObjectsCollisions(human, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, Thorn0);
-
     }
     
     glDisable(GL_TEXTURE_2D);
     glutSwapBuffers();
-    // std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
+    std::cout<<"diamonds collected : "<<diamondCollected<<std::endl;
 
 }
 
@@ -381,17 +279,13 @@ int main(int argc, char** argv)
         Thorn[i].init(x, 940);
         x += 16;
     }
-    // std::thread kill(dokill);
-    
-
-
+    //std::thread kill(dokill);
     for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
     {
         diamond_lvl1[i].init(x, 1080);
         diamond_lvl2[i].init(x, 500);
         diamond_lvl3[i].init(x, y);
     }
-
 
     glutInit(&argc, argv);
     width1 = glutGet(GLUT_SCREEN_WIDTH);

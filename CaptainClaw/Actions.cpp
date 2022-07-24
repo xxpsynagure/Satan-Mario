@@ -1,7 +1,53 @@
 #include "Render.h"
 extern int level, allThornDown;
 
-extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft, gameOverFlag;
+extern int moveDownFlag, level, upInAir, moveRight, moveLeft, gameOverFlag, xx,yy,flag,youWinFlag;
+extern GLdouble top, bottom, left, right;
+
+void fallDown(int value)
+{
+    if (yy > 940 && level == 1 && upInAir == 1)
+    {
+        yy -= 3;
+        if (flag == 1) xx++;
+        else xx -= 0.5;
+    }
+    if (level == 2 && yy < 940 && yy>430)
+    {
+        yy -= 10;
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        top -= 10; bottom -= 10;
+        gluOrtho2D(left, right, bottom, top);
+    }
+    if (level == 3 && yy >= 0 && yy <= 430 && xx < 1526)
+    {
+        yy -= 3;
+        xx++;
+        if (bottom > 0.0)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            top -= 3; bottom -= 3;
+            gluOrtho2D(left, right, bottom, top);
+        }
+        if (right < 1536.0 && xx >= 165)
+        {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            left++; right++;
+            gluOrtho2D(left, right, bottom, top);
+        }
+    }
+    else
+        upInAir = 0;
+    //std::cout <<"flag: " << flag << std::endl;
+    if (youWinFlag == 1)
+        glutTimerFunc(3, NULL, 0);
+    else
+        glutTimerFunc(30, fallDown, 0);
+    glutPostRedisplay();
+}
 
 void platformCollision(Human &human, Platforms &platform)
 {   
@@ -71,14 +117,6 @@ void blockCollision(Human &human, Blocks &block)
     else{
         upInAir = 1;
     }
-
-    //if(collideX)
-    //{
-    //    moveRight = 0;
-    //}
-    //else{
-    //    moveRight = 1;
-    //}
 }
 
 void diamondCollision(Human &human, Diamonds &diamond0)
@@ -89,7 +127,6 @@ void diamondCollision(Human &human, Diamonds &diamond0)
     if(collideX & collideY){
         // std::cout<<"diamond is destroyed";
         diamond0.enabled = 0;
-        diamondCollected += 1;
     }
 }
 
