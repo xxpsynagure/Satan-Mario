@@ -53,13 +53,17 @@ void dokill()
             while (Thorn[num].y >= 480)
             {
                 Thorn[num].y--;
-                std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                //Thorn collision
+                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-18 && Thorn[num].x + 16 <= xx+18) {
+                    gameOverFlag = 1;
+                    Sleep(1000);
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(3));
             }
         }
         //mu.unlock();
     }
 }
-
 
 void init()
 {
@@ -264,7 +268,7 @@ void display()
         // Platforms platform2(400, 550, 500, 550);
         // Platforms platform3(900, 320, 1050, 320);
         
-        std::cout << "level " << level << std::endl;
+        //std::cout << "level " << level << std::endl;
         Ladder ladder(xx, yy);
         ladder.draw();
 
