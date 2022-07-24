@@ -7,9 +7,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-#include "./Render.cpp"
-#include "./Texture.cpp"
+// #include "./Render.cpp"
+// #include "./Texture.cpp"
 #include "./Actions.cpp"
+#include "./Threads.cpp"
 
 //Position of player
 int xx = 30;
@@ -46,10 +47,12 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
-DWORD WINAPI killThread(LPVOID lpParameter)
+
+void dokill()
 {
     while (true)
     {
+        //mu.lock();
         if (level == 2)
         {
             int num = rand() % 90;
@@ -64,31 +67,9 @@ DWORD WINAPI killThread(LPVOID lpParameter)
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
         }
+        //mu.unlock();
     }
 }
-
-// void dokill()
-// {
-//     while (true)
-//     {
-//         //mu.lock();
-//         if (level == 2)
-//         {
-//             int num = rand() % 90;
-//             while (Thorn[num].y >= 480)
-//             {
-//                 Thorn[num].y--;
-//                 //Thorn collision
-//                 if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-16 && Thorn[num].x + 16 <= xx+16) {
-//                     gameOverFlag = 1;
-//                     Sleep(1000);
-//                 }
-//                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
-//             }
-//         }
-//         //mu.unlock();
-//     }
-// }
 
 void init()
 {
@@ -298,15 +279,15 @@ void display()
         
         for (int i = 0; i < 15; i++)
         {
-            if (diamond_lvl1->enabled == 1){
+            if (diamond_lvl1[i].enabled == 1){
                 diamond_lvl1[i].draw();
                 diamondCollision(human, diamond_lvl1[i]);
             }
-            if (diamond_lvl2->enabled == 1){
+            if (diamond_lvl2[i].enabled == 1){
                 diamond_lvl2[i].draw();
                 diamondCollision(human, diamond_lvl2[i]);
             }   
-            if (diamond_lvl3->enabled == 1){
+            if (diamond_lvl3[i].enabled == 1){
                 diamond_lvl3[i].draw();
                 diamondCollision(human, diamond_lvl3[i]);
             }
@@ -400,11 +381,7 @@ int main(int argc, char** argv)
     }
     // std::thread kill(dokill);
     
-    HANDLE hThread = CreateThread(NULL, 0, killThread, NULL, 0, NULL);
-    if(gameOverFlag == 1)
-    {
-        CloseHandle(hThread);
-    }
+
 
     for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
     {
