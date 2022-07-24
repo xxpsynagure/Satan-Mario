@@ -41,6 +41,10 @@ Diamonds diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, d
 int diamondCollected = 0;
 
 Thornsinv Thorn[100];
+Diamonds diamond_lvl1[15];
+Diamonds diamond_lvl2[15];
+Diamonds diamond_lvl3[20];
+Human human;
 
 void dokill()
 {
@@ -262,7 +266,7 @@ void display()
         // Platforms platform1(100, 100, 200, 100);
         // Platforms platform2(400, 550, 500, 550);
         // Platforms platform3(900, 320, 1050, 320);
-        
+        human.init(xx, yy);
         //std::cout << "level " << level << std::endl;
         Ladder ladder(xx, yy);
         ladder.draw();
@@ -271,7 +275,23 @@ void display()
         Thorns Thorn0(1556, 100); // x coordinate value and no of thorns
         //Thorns Thorn1(400, 20);
         
-
+        for (int i = 0; i < 15; i++)
+        {
+            if (diamond_lvl1->enabled == 1){
+                diamond_lvl1[i].draw();
+                diamondCollision(human, diamond_lvl1[i]);
+            }
+            if (diamond_lvl2->enabled == 1){
+                diamond_lvl2[i].draw();
+                diamondCollision(human, diamond_lvl2[i]);
+            }   
+            if (diamond_lvl3->enabled == 1){
+                diamond_lvl3[i].draw();
+                diamondCollision(human, diamond_lvl3[i]);
+            }
+                
+        }
+        /*
         if (diamond0.enabled == 1)
         {
             diamond0.draw(400, 1050);
@@ -300,8 +320,8 @@ void display()
         {
             diamond6.draw(500, 400);
         }
-
-        Human human(xx, yy);
+        */
+        
         human.draw();
         std::cout<<xx<<" "<<yy<<std::endl;
         for (int i = 0; i < 90; i++)
@@ -318,7 +338,6 @@ void display()
             glViewport(0, 0, width1, height1);
             end();
         }
-
 
         checkObjectsCollisions(human, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, Thorn0);
 
@@ -353,13 +372,20 @@ void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks
 
 int main(int argc, char** argv)
 {
-    int x = 0;
-    for (int i = 0; i < 90; i++)
+    for (int i = 0, x = 0; i < 90; i++)
     {
         Thorn[i].init(x, 940);
         x += 16;
     }
     std::thread kill(dokill);
+
+    for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
+    {
+        diamond_lvl1[i].init(x, 1050);
+        diamond_lvl2[i].init(x, 500);
+        diamond_lvl3[i].init(x, y);
+    }
+
 
     glutInit(&argc, argv);
     width1 = glutGet(GLUT_SCREEN_WIDTH);

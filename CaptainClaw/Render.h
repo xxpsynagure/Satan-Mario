@@ -8,15 +8,16 @@ class Human
 private:
     /* data */
 public:
-    GLfloat x, y, theta;
+    GLfloat x=30, y=940, theta;
     struct Position
     {
         GLfloat x, y;
     };
     Position bottomLeft, bottomRight, topRight, topLeft;
     // Human();
-    Human(int, int);
+    //Human(int, int);
     ~Human(){}
+    void init(int,int);
     void draw();
 };
 
@@ -92,10 +93,8 @@ public:
     Position bottom, right, top, left;
     int enabled = 1;
 
-    Diamonds(){}
-    ~Diamonds(){}
-
-    void draw(int, int);
+    void init(int, int);
+    void draw();
 
 };
 

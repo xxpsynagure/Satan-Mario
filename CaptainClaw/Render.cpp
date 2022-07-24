@@ -3,7 +3,7 @@
 #include "Render.h"
 extern int yy, xx, goWhereFlag;
 
-Human::Human(int xx, int yy)
+void Human::init(int xx, int yy)
 {
     this->x = xx;
     this->y = yy;
@@ -195,7 +195,7 @@ Thorns::Thorns(int xs, int ns)
     }  
 }
 
-void Diamonds::draw(int x, int y)
+void Diamonds::init(int x, int y)
 {
     this->bottom.x = x;
     this->bottom.y = y;
@@ -205,8 +205,9 @@ void Diamonds::draw(int x, int y)
     this->top.y = y + 36;
     this->left.x = x - 10;
     this->left.y = y + 18;
-
-
+}
+void Diamonds::draw()
+{
     glColor3f(0.392, 0.584, 0.929); 
     glBegin(GL_QUADS);
     glVertex2f(bottom.x, bottom.y);
