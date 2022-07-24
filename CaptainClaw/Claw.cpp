@@ -54,11 +54,11 @@ void dokill()
             {
                 Thorn[num].y--;
                 //Thorn collision
-                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-18 && Thorn[num].x + 16 <= xx+18) {
+                if (Thorn[num].y - 55 <= yy + 75 && Thorn[num].x + 16 >= xx-16 && Thorn[num].x + 16 <= xx+16) {
                     gameOverFlag = 1;
                     Sleep(1000);
                 }
-                std::this_thread::sleep_for(std::chrono::milliseconds(3));
+                std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
         }
         //mu.unlock();
@@ -67,19 +67,16 @@ void dokill()
 
 void init()
 {
-    
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(left, right, bottom, top);
     glViewport(0, 0, width1, height1);
-
 }
 
 void fallDown(int value)
-{
-   
+{ 
     if (yy > 940 && level==1 && upInAir==1)
     {
         yy-=3;
@@ -112,7 +109,6 @@ void fallDown(int value)
             left ++; right ++;
             gluOrtho2D(left, right, bottom, top);
         }
-
     }
     else
         upInAir = 0;
@@ -160,7 +156,6 @@ void specialkey(int key, int x, int y)
                 gluOrtho2D(left, right, bottom, top);
             }
         }
-        
         flag = 1;
         //std::cout << "RIGHT: " << xx << "\t" << yy << "\t\t"<< "left: "<<left<<"\tright:"<<right<<std::endl;
         break;
@@ -371,7 +366,7 @@ int main(int argc, char** argv)
     height1 = glutGet(GLUT_SCREEN_HEIGHT);
     glutInitWindowSize(width1, height1);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutCreateWindow("Captain Claw's Quest");
+    glutCreateWindow("Satan Mario");
     glutFullScreen();
     glutSetCursor(GLUT_CURSOR_NONE);
 
