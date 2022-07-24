@@ -244,13 +244,30 @@ void Thornsinv::draw()
 
 Pit::Pit()
 {
-    glColor3f(1.0, 1.0, 0.0);
+    glColor3f(0.504, 0.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex2d(15, 470);
+    glVertex2d(85, 470);
+    glVertex2d(85, 400);
+    glVertex2d(15, 400);
+    glEnd();
 
+    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_POLYGON); // PIT
     for (int i = 0; i < 360; i++)
     {
         this->theta = i * 3.14159 / 180;
-        glVertex2f(50 + cos(this->theta) * 35, 480 + sin(this->theta) * 15);
+        glVertex2f(50 + cos(theta) * 35, 470 + sin(theta) * 15);
     }
     glEnd();
+
+    glColor3f(0.30, 0.0, 0.00);
+    glBegin(GL_POLYGON); // PIT
+    for (int i = 0; i < 360; i++)
+    {
+        this->theta = i * 3.14159 / 180;
+        glVertex2f(50 + cos(theta) * 35, 400 + sin(theta) * 15);
+    }
+    glEnd();
+
 }

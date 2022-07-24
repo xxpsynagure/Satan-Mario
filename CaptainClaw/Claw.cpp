@@ -28,6 +28,7 @@ int upInAir = 0;
 int moveRight = 1, moveLeft = 1;
 int gameOverFlag = 0;
 int youWinFlag = 0;
+int allThornDown = 0;
 
 //std::mutex mu;
 
@@ -326,12 +327,11 @@ void display()
         
         human.draw();
         // std::cout<<xx<<" "<<yy<<std::endl;
+        Pit pit;
         for (int i = 0; i < 90; i++)
         {
             Thorn[i].draw();
         }
-        Pit pit;
-
         if (gameOverFlag == 1) {
             Sleep(1000);
             left = 0.0, right = 2000.0, bottom = 0.0, top = 1000.0;
@@ -388,7 +388,7 @@ int main(int argc, char** argv)
     for (int i = 0, x = rand()%1536, y = 20 + rand()%380; i < 15; i++, x = rand() % 1536, y = 20 + rand() % 380)
     {
         diamond_lvl1[i].init(x, 1080);
-        // diamond_lvl2[i].init(x, 500);
+        diamond_lvl2[i].init(x, 500);
         diamond_lvl3[i].init(x, y);
     }
 

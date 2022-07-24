@@ -1,10 +1,9 @@
 #include <Windows.h>
 #include <thread>
 #include "Render.h"
-extern int level;
+extern int level, allThornDown;
 extern Thornsinv Thorn[100];
 extern int gameOverFlag, xx, yy;
-
 
 
 DWORD WINAPI killThread(LPVOID lpParameter)
@@ -24,6 +23,15 @@ DWORD WINAPI killThread(LPVOID lpParameter)
                 }
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
+        }
+        else if(level == 3 && allThornDown != 1)
+        {
+            for(int num = 6; num<= 100; num++)
+            {
+                Thorn[num].y = 460;     
+                Sleep(100);
+            }
+            allThornDown = 1;
         }
     }
 }

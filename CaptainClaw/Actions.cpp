@@ -1,4 +1,5 @@
 #include "Render.h"
+extern int level, allThornDown;
 
 extern int moveDownFlag, level, upInAir, diamondCollected, moveRight, moveLeft, gameOverFlag;
 
@@ -101,5 +102,13 @@ void ThornCollision(Human &human, Thorns &Thorn)
     {
         std::cout<<"You died";
         gameOverFlag = 1;
+    }
+    if(level == 3 && allThornDown ==  1)
+    {
+        if(human.topLeft.y >= 420)
+        {
+            std::cout<<"You died";
+            gameOverFlag = 1;
+        }
     }
 }
