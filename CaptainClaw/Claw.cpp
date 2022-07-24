@@ -48,8 +48,8 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
-std::string score;
-std::ifstream scoreFile("scoreFile.txt");
+int score = 0;
+std::ifstream scoreFile("scoreFile.satan");
 
 void init()
 {
@@ -62,17 +62,16 @@ void init()
 
     if(scoreFile.is_open())
     {
-    std::getline(scoreFile, score);
+    scoreFile.read((char*)&score, sizeof(score));
     scoreFile.close();
     }
     else
     {
         std::ofstream scoreFile;
-        scoreFile.open("scoreFile.txt");
-        scoreFile << "0";
+        scoreFile.open("scoreFile.satan");
+        scoreFile.write((char*)&score, sizeof(score));
         scoreFile.close();
     }
-    std::cout<<typeid(score).name()<<std::endl;
 
 }
 
@@ -255,15 +254,16 @@ void display()
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
         glRasterPos2f(right - 100, top - 50);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"HIGH SCORE: ");
-        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)score.c_str());
+        std::string scoreStr = std::to_string(score);
+        glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)scoreStr.c_str());
         
         if (gameOverFlag == 1) {
             // WRITING HIGHSCORE TO THE FILE
-            if(str > score)
+            if(diamondCollected > score)
             {
                 std::ofstream scoreFile;
-                scoreFile.open("scoreFile.txt");
-                scoreFile << str;
+                scoreFile.open("scoreFile.satan");
+                scoreFile.write((char*)&diamondCollected, sizeof(diamondCollected));
                 scoreFile.close();
             }
 
