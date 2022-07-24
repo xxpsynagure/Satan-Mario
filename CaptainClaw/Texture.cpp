@@ -1,11 +1,12 @@
 #include "stb_image.h"
 #include <GL/freeglut.h>
 #include <iostream>
+#include <string>
 #include "Texture.h"
 
 GLuint bg_texture, intro_texture, end_texture, win_texture;
 extern int width1, height1;
-extern int level;
+extern int level, diamondCollected;
 
 void background() {
     glEnable(GL_TEXTURE_2D);
@@ -175,6 +176,14 @@ void end() {
     glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
+    glColor3f(1.0, 1.0, 1.0);
+
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2f(865, 460);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE: ");
+    glRasterPos2f(1115, 460);
+    std::string str = std::to_string(diamondCollected);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
 }
 
 void win() {
@@ -193,4 +202,11 @@ void win() {
     glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
+
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2f(865, 465);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE: ");
+    glRasterPos2f(1115, 465);
+    std::string str = std::to_string(diamondCollected);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
 }
