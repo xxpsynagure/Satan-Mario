@@ -56,7 +56,7 @@ Download the zip file from the below link
 
 Double click on the CaptainClaw.exe file (make sure the freeglut.dll file is present in the same directory)
 
-[![PlayGame](https://user-images.githubusercontent.com/68809099/180777619-1dcc0681-92cc-417b-8fd7-9180dd047575.jpeg)](https://xxpsy.itch.io/satanmario)
+[![PlayGame](https://user-images.githubusercontent.com/68809099/180841733-501f883a-61bb-45ed-bb6d-194a7a4935ea.jpeg)](https://xxpsy.itch.io/satanmario)
 
 ## Screenshots
 
