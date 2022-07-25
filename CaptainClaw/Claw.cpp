@@ -2,16 +2,15 @@
 #include <GL/freeglut.h>
 #include <iostream>
 #include <cstdlib>
-#include <thread>
 #include <string>
 #include <fstream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "Texture.h"
 #include "Render.h"
-#include "./Render.cpp"
-#include "./Texture.cpp"
-#include "./Actions.cpp"
-#include "./Threads.cpp"
+//#include "./Render.cpp"
+//#include "./Texture.cpp"
+#include "Actions.cpp"
+#include "Threads.cpp"
 
 //Position of player
 int xx = 30;
@@ -31,16 +30,13 @@ int gameOverFlag = 0;
 int youWinFlag = 0;
 int allThornDown = 0;
 
-
 // game map size = 1536*1536
 //level 1 - 940
 //level 2 - 430
 //level 3 - 0
 
 GLdouble left=0.0, right= 2000.0, bottom=0.0, top = 1000.0 ;
-float deltaTime, oldTime;
-Diamonds diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, diamond7;
-int diamondCollected = 0;
+//float deltaTime, oldTime;
 
 Thornsinv Thorn[100];
 Diamonds diamond_lvl1[15];
@@ -48,6 +44,7 @@ Diamonds diamond_lvl2[15];
 Diamonds diamond_lvl3[20];
 Human human;
 
+int diamondCollected = 0;
 int score = 0;
 std::ifstream scoreFile("scoreFile.satan");
 
@@ -72,7 +69,6 @@ void init()
         scoreFile.write((char*)&score, sizeof(score));
         scoreFile.close();
     }
-
 }
 
 void specialkey(int key, int x, int y)
@@ -175,7 +171,7 @@ void keyPressed(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Diamonds &diamond3, Diamonds &diamond4, Diamonds &diamond5, Diamonds &diamond6, Thorns &Thorn0);
+void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Thorns &Thorn0);
 
 
 void display()
@@ -249,10 +245,10 @@ void display()
         glColor3f(1.0, 1.0, 1.0);
         glRasterPos2f(left + 20, top - 50);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"SCORE: ");
-        glRasterPos2f(left + 75, top-50);
+        //glRasterPos2f(left + 75, top-50);
         std::string str = std::to_string(diamondCollected);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
-        glRasterPos2f(right - 100, top - 50);
+        glRasterPos2f(right - 120, top - 50);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"HIGH SCORE: ");
         std::string scoreStr = std::to_string(score);
         glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)scoreStr.c_str());
@@ -277,7 +273,7 @@ void display()
             end();
         }
 
-        checkObjectsCollisions(human, ladder, block0, block1, block2, block3, diamond0, diamond1, diamond2, diamond3, diamond4, diamond5, diamond6, Thorn0);
+        checkObjectsCollisions(human, ladder, block0, block1, block2, block3, Thorn0);
     }
     
     glDisable(GL_TEXTURE_2D);
@@ -286,25 +282,14 @@ void display()
 
 }
 
-void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Diamonds &diamond0, Diamonds &diamond1, Diamonds &diamond2, Diamonds &diamond3, Diamonds &diamond4, Diamonds &diamond5, Diamonds &diamond6, Thorns &Thorn0)
+void checkObjectsCollisions(Human &human, Ladder &ladder, Blocks &block0, Blocks &block1, Blocks &block2, Blocks &block3, Thorns &Thorn0)
 {
-    // platformCollision(human, platform1);
-    // platformCollision(human, platform1);
-    // platformCollision(human, platform3);
     ladderCollision(human, ladder);
     blockCollision(human, block0);
     blockCollision(human, block1);
     blockCollision(human, block2);
     blockCollision(human, block3);
-    diamondCollision(human, diamond0);
-    diamondCollision(human, diamond1);
-    diamondCollision(human, diamond2);
-    diamondCollision(human, diamond3);
-    diamondCollision(human, diamond4);
-    diamondCollision(human, diamond5);
-    diamondCollision(human, diamond6);
     ThornCollision(human, Thorn0);
-    //ThornCollision(human, Thorn1);
 }
 
 int main(int argc, char** argv)
@@ -333,11 +318,10 @@ int main(int argc, char** argv)
 
     init();
     loadtexture();
-    oldTime = clock();
+    //oldTime = clock();
     glutDisplayFunc(display);
     glutSpecialFunc(specialkey);
     glutKeyboardFunc(keyPressed);
-    //glutReshapeFunc(reshape);
     glutTimerFunc(30, fallDown, 0);
     //std::cout << glGetString(GL_VERSION)<<std::endl;
     //std::cout << width1 << "  " << height1 << std::endl;

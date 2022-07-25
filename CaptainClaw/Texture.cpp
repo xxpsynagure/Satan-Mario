@@ -26,6 +26,77 @@ void background() {
     glDisable(GL_TEXTURE_2D);
 }
 
+
+void intro() {
+    glEnable(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, intro_texture);
+
+    //Image size = 2000*1000
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+}
+
+void end() {
+    glEnable(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, end_texture);
+
+    //Image size = 2000*1000
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+    glColor3f(1.0, 1.0, 1.0);
+
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2f(875, 460);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE:  ");
+    //glRasterPos2f(1115, 460);
+    std::string str = std::to_string(diamondCollected);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
+}
+
+void win() {
+    glEnable(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D, win_texture);
+
+    //Image size = 2000*1000
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
+    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
+    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
+    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    glColor3f(1.0, 1.0, 1.0);
+    glRasterPos2f(865, 465);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE:  ");
+    //glRasterPos2f(1115, 465);
+    std::string str = std::to_string(diamondCollected);
+    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
+}
+
 void loadtexture()
 {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -139,74 +210,4 @@ void loadtexture()
     //------------------------------------------------------------------------------------------------------------------
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void intro() {
-    glEnable(GL_TEXTURE_2D);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, intro_texture);
-   
-    //Image size = 2000*1000
-    glBegin(GL_QUADS);
-    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
-    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
-    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
-    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
-}
-
-void end() {
-    glEnable(GL_TEXTURE_2D);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, end_texture);
-
-    //Image size = 2000*1000
-    glBegin(GL_QUADS);
-    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
-    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
-    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
-    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-    glColor3f(1.0, 1.0, 1.0);
-
-    glColor3f(1.0, 1.0, 1.0);
-    glRasterPos2f(865, 460);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE: ");
-    glRasterPos2f(1115, 460);
-    std::string str = std::to_string(diamondCollected);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
-}
-
-void win() {
-    glEnable(GL_TEXTURE_2D);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glBindTexture(GL_TEXTURE_2D, win_texture);
-
-    //Image size = 2000*1000
-    glBegin(GL_QUADS);
-    glTexCoord2f(1.0f, 0.0f);   glVertex2f(0.0, 0.0);
-    glTexCoord2f(1.0f, 1.0f);   glVertex2f(0.0, (float)1000);
-    glTexCoord2f(0.0f, 1.0f);   glVertex2f((float)2000, (float)1000);
-    glTexCoord2f(0.0f, 0.0f);   glVertex2f((float)2000, 0.0);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
-
-    glColor3f(1.0, 1.0, 1.0);
-    glRasterPos2f(865, 465);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)"YOUR SCORE: ");
-    glRasterPos2f(1115, 465);
-    std::string str = std::to_string(diamondCollected);
-    glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (const unsigned char*)str.c_str());
 }

@@ -93,28 +93,6 @@ Ladder::Ladder(int x, int y)
     this->topRight.y = 980;
     this->topLeft.x = 1460;
     this->topLeft.y = 980;
-    // if (x > 780)
-    // {
-    //     this->bottomLeft.x = 1460;
-    //     this->bottomLeft.y = 560;
-    //     this->bottomRight.x = 1500;
-    //     this->bottomRight.y = 560;
-    //     this->topRight.x = 1500;
-    //     this->topRight.y = 980;
-    //     this->topLeft.x = 1460;
-    //     this->topLeft.y = 980;
-    // }
-    // if (x < 780)
-    // {
-    //     this->bottomLeft.x = 50;
-    //     this->bottomLeft.y = 58;
-    //     this->bottomRight.x = 90;
-    //     this->bottomRight.y = 58;
-    //     this->topRight.x = 90;
-    //     this->topRight.y = 480;//480
-    //     this->topLeft.x = 50;
-    //     this->topLeft.y = 480;//480
-    // }
 }
 
 void Ladder::draw()
@@ -225,7 +203,6 @@ void Diamonds::draw()
     glEnd();
 
 }
-
 
 void Thornsinv::init(int xs, int ys = 940)
 {
