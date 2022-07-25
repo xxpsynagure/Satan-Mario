@@ -52,9 +52,9 @@ This command creates an executable file for the game that you can use repeatedly
 
 ## Deployment
 
-Download the zip file from the below link
+Download the zip file from the below link and extract it.
 
-Double click on the CaptainClaw.exe file (make sure the freeglut.dll file is present in the same directory)
+Double click on the SatanMario.exe file (make sure the freeglut.dll file is present in the same directory)
 
 [![PlayGame](https://user-images.githubusercontent.com/68809099/180841733-501f883a-61bb-45ed-bb6d-194a7a4935ea.jpeg)](https://xxpsy.itch.io/satanmario)
 
