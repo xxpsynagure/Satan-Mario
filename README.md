@@ -58,6 +58,8 @@ Download the zip file from the below link
 
 Double click on the CaptainClaw.exe file (make sure the freeglut.dll file is present in the same directory)
 
+https://xxpsy.itch.io/satanmario
+
 ## Screenshots
 
 ![image](https://user-images.githubusercontent.com/68809099/180727052-7af40892-93bb-42cc-80f8-4973612df55e.png)
