@@ -1,9 +1,9 @@
 
 # SATAN-MARIO
 
-This project was developed as mini-project for 6th semester of BE in Computer Science.
+This project was developed as a part of 6th semester, BE in Computer Science mini project.
 
-The game is developed using OpenGL with FREEGLUT API for the rendering and C++ for logic and other functionalities.
+The game was developed using OpenGL and FREEGLUT API for rendering and C++ for logic and other functionalities.
 
 
 ## Authors
@@ -14,7 +14,8 @@ The game is developed using OpenGL with FREEGLUT API for the rendering and C++ f
 
 ## Demo
 
-Insert gif or link to demo
+[Satan_game_edit1.webm](https://user-images.githubusercontent.com/68809099/180737054-f930186f-ddd3-4042-bf15-7a5f0f3d5947.webm)
+[Satan_game_edit1(1).webm](https://user-images.githubusercontent.com/68809099/180737072-995a63a4-2f29-4125-8cfb-fd5e191fcdf9.webm)
 
 
 ## Run Locally
@@ -34,7 +35,7 @@ Go to the project directory
 __With Visual Studio__
 
 ```bash
-  Open directory as project in visual studio and click on run solution
+  Open directory as project in Visual Studio and run the solution 
 ```
 
 __Without Visual Studio__
@@ -51,15 +52,27 @@ __Without Visual Studio__
 ```
 This command creates an executable file for the game that you can use repeatedly.
 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 ## Deployment
 
 Download the zip file from the below link
 
-Double click on the Claw.exe file (make sure the freeglut.dll file is present in the same directory)
+Double click on the CaptainClaw.exe file (make sure the freeglut.dll file is present in the same directory)
+
+## Screenshots
+
+![image](https://user-images.githubusercontent.com/68809099/180727052-7af40892-93bb-42cc-80f8-4973612df55e.png)
+![image](https://user-images.githubusercontent.com/68809099/180727160-b7b76ef6-22e3-44eb-9224-8113d7575806.png)
+![image](https://user-images.githubusercontent.com/68809099/180729025-f61ce3f6-f21e-4fea-83b6-594ce51ee401.png)
+<!-- ![image](https://user-images.githubusercontent.com/68809099/180727367-0b5cc789-0579-4552-8761-355992d1de1f.png) -->
+![WhatsApp Image 2022-07-25 at 1 27 56 PM](https://user-images.githubusercontent.com/68809099/180727754-529418db-2f75-49f1-b3cc-98c3ed113732.jpeg)
+![image](https://user-images.githubusercontent.com/68809099/180727428-4a1c8c82-99b7-4c97-be5d-d4d48b654158.png)
+![image](https://user-images.githubusercontent.com/68809099/180741271-1d6bf150-32c9-4201-a153-face63ada588.png)
+
+
+
+
+
+
+
 
 
